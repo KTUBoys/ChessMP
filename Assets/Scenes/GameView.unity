@@ -1446,6 +1446,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 330697335}
+  - component: {fileID: 330697336}
   m_Layer: 0
   m_Name: Chess Board
   m_TagString: Untagged
@@ -1539,6 +1540,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &330697336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330697334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f36c300d6ad76240bceed5df3ace1c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PawnPiece: {fileID: 919132149155446097, guid: c70085651e5467c48ae8ff7ddfca78a9,
+    type: 3}
+  RookPiece: {fileID: 919132149155446097, guid: ead4372ebff54a34ca60818653d6db0e,
+    type: 3}
+  QueenPiece: {fileID: 919132149155446097, guid: d91823f4e99445c4ebdcf521f17d992a,
+    type: 3}
+  KingPiece: {fileID: 919132149155446097, guid: 7b926408c31e7574abc8fa2d7efd1644,
+    type: 3}
+  BishopPiece: {fileID: 919132149155446097, guid: 1cb0e4f8f884dd54e8b6ebb1ce355d17,
+    type: 3}
+  KnightPiece: {fileID: 919132149155446097, guid: e406c4967fa65ab45b458a264358dd6c,
+    type: 3}
+  YAxis: -0.85
 --- !u!1 &412391861
 GameObject:
   m_ObjectHideFlags: 0
