@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using JetBrains.Annotations;
+using UnityEngine;
+using Assets.Scripts;
 
 namespace Assets.Scenes.GameView.Scripts
 {
@@ -16,10 +19,13 @@ namespace Assets.Scenes.GameView.Scripts
 
         public GameObject KnightPiece;
 
-        public float YAxis = -0.85f;
+        public float YAxis = -0.9f;
+
         // Start is called before the first frame update
         void Start()
         {
+            ChessBoard.Initialize();
+
             Quaternion[] pieceAngles = {Quaternion.Euler(-90, 180, 0),  // [0] - WHITE,
                 Quaternion.Euler(-90, -180, 0)};                        // [1] - BLACK
             int[] xPoints = 
@@ -40,8 +46,6 @@ namespace Assets.Scenes.GameView.Scripts
             };
 
             SpawnFigures(xPoints, zPoints, pieceAngles);
-
-
         }
 
         // Update is called once per frame
@@ -50,40 +54,49 @@ namespace Assets.Scenes.GameView.Scripts
         
         }
 
-        private void SpawnFigures(int[] xPoints, int[] zPoints, Quaternion[] angles)
+        private void SpawnFigures([NotNull] IReadOnlyList<int> xPoints, [NotNull] IReadOnlyList<int> zPoints, [NotNull] IReadOnlyList<Quaternion> angles)
         {
             // Spawn White figures
             var white = angles[0];
 
-            SpawnPaws(xPoints[0], zPoints[0], white);
-            SpawnRooks(xPoints[0], zPoints[1], white);
-            SpawnKnights(xPoints[1], zPoints[1], white);
-            SpawnBishops(xPoints[2], zPoints[1], white);
-            SpawnQueen(xPoints[3], zPoints[1], white);
-            SpawnKing(xPoints[4], zPoints[1], white);
+            SpawnPaws(xPoints[0], zPoints[0], white, 1);
+            SpawnRooks(xPoints[0], zPoints[1], white, 1);
+            SpawnKnights(xPoints[1], zPoints[1], white, 1);
+            SpawnBishops(xPoints[2], zPoints[1], white, 1);
+            SpawnQueen(xPoints[3], zPoints[1], white, 1);
+            SpawnKing(xPoints[4], zPoints[1], white, 1);
 
             // Spawn Black figures
             var black = angles[1];
 
-            SpawnPaws(xPoints[0], zPoints[2], black);
-            SpawnRooks(xPoints[0], zPoints[3], black);
-            SpawnKnights(xPoints[1], zPoints[3], black);
-            SpawnBishops(xPoints[2], zPoints[3], black);
-            SpawnQueen(xPoints[3], zPoints[3], black);
-            SpawnKing(xPoints[4], zPoints[3], black);
+            SpawnPaws(xPoints[0], zPoints[2], black, 0);
+            SpawnRooks(xPoints[0], zPoints[3], black, 0);
+            SpawnKnights(xPoints[1], zPoints[3], black, 0);
+            SpawnBishops(xPoints[2], zPoints[3], black, 0);
+            SpawnQueen(xPoints[3], zPoints[3], black, 0);
+            SpawnKing(xPoints[4], zPoints[3], black, 0);
         }
 
-        private void SpawnPaws(float x, float z, Quaternion quaternion)
+        private void SpawnPaws(float x, float z, Quaternion quaternion, int color)
         {
+            var isFull = ChessBoard.isFull;
+            PawnPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
+            var index = 8;
+            if (color == 1) index = 48;
             for (var i = 0; i < 8; i++)
             {
-                Instantiate(PawnPiece, new Vector3(x, YAxis, z), quaternion);
-                x += 10;    // Add 10 to x-axis
+                var pawn = Instantiate(PawnPiece, new Vector3(x, YAxis, z), quaternion);
+                pawn.AddComponent<PawnMovement>();
+                pawn.AddComponent<BoxCollider>();
+                isFull[index] = true;
+                index += 1;
+                x += 10;
             }
         }
 
-        private void SpawnRooks(float x, float z, Quaternion quaternion)
+        private void SpawnRooks(float x, float z, Quaternion quaternion, int color)
         {
+            RookPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
             for (var i = 0; i < 2; i++)
             {
                 Instantiate(RookPiece, new Vector3(x, YAxis, z), quaternion);
@@ -91,8 +104,9 @@ namespace Assets.Scenes.GameView.Scripts
             }
         }
 
-        private void SpawnKnights(float x, float z, Quaternion quaternion)
+        private void SpawnKnights(float x, float z, Quaternion quaternion, int color)
         {
+            KnightPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
             for (var i = 0; i < 2; i++)
             {
                 Instantiate(KnightPiece, new Vector3(x, YAxis, z), quaternion);
@@ -100,22 +114,25 @@ namespace Assets.Scenes.GameView.Scripts
             }
         }
 
-        private void SpawnBishops(float x, float z, Quaternion quaternion)
+        private void SpawnBishops(float x, float z, Quaternion quaternion, int color)
         {
+            BishopPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
             for (var i = 0; i < 2; i++)
             {
                 Instantiate(BishopPiece, new Vector3(x, YAxis, z), quaternion);
-                x += 20;
+                x += 30;
             }
         }
 
-        private void SpawnKing(float x, float z, Quaternion quaternion)
+        private void SpawnKing(float x, float z, Quaternion quaternion, int color)
         {
+            KingPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
             Instantiate(KingPiece,new Vector3(x, YAxis, z), quaternion);
         }
 
-        private void SpawnQueen(float x, float z, Quaternion quaternion)
+        private void SpawnQueen(float x, float z, Quaternion quaternion, int color)
         {
+            QueenPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
             Instantiate(QueenPiece, new Vector3(x, YAxis, z), quaternion);
         }
     }
