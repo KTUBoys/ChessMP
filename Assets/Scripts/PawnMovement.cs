@@ -74,7 +74,8 @@ namespace Assets.Scripts
         {
             pos = gameObject.transform.position;
             var cells = ChessBoard.BoardCoords;
-            var isFull = ChessBoard.isFull;
+            var isFull = ChessBoard.IsFull;
+            var whoInCell = ChessBoard.WhoInCell;
             var origin = new Point((int) curPos.x, (int) curPos.z);
             var neighbors = cells.Select(p => new {Point = p, Distance = CalculateTwoDistances(origin, p)})
                 .Where(pointAndDistance => pointAndDistance.Distance <= Math.Pow(7, 2))
@@ -84,17 +85,38 @@ namespace Assets.Scripts
 
             var defaultCellIndex = Array.FindIndex(cells, point => point.X == (int)defaultPos.x && point.Y == (int)defaultPos.z);
             var cellIndex = Array.FindIndex(cells, point => point.X == neighbors.First().X && point.Y == neighbors.First().Y);
+            var whoInDefault = whoInCell[defaultCellIndex];
 
-            Debug.Log($"Chess piece at coordinates: {curPos.x};{curPos.z} was put on {isFull[cellIndex]} cell at {cells[cellIndex].X};{cells[cellIndex].Y}");
-
+            // Check if destination point is empty
             if (isFull[cellIndex])
             {
-                gameObject.transform.SetPositionAndRotation(defaultPos, rot);
+                // Not empty, check if we are trying to make a move
+                var whoInDestination = whoInCell[cellIndex];
+                var whatColorO = whoInDefault.Split(' ')[0];
+                var whatColorD = whoInDestination.Split(' ')[0];
+                if (whatColorO == whatColorD)
+                {
+                    // Tried to take out our own piece. Move the piece back to its place
+                    gameObject.transform.SetPositionAndRotation(defaultPos, rot);
+                }
+                else
+                {
+                    // Good, the piece was actually our enemy. Let's take it down
+                    gameObject.transform.SetPositionAndRotation(new Vector3(neighbors.First().X, -0.9f, neighbors.First().Y), rot);
+                    isFull[cellIndex] = true;
+                    whoInCell[cellIndex] = whoInDefault;
+                    whoInCell[defaultCellIndex] = null;
+                    isFull[defaultCellIndex] = false;
+                    Destroy(GameObject.Find(whoInDestination));
+                }
             }
             else
             {
+                // Empty destination, move successful
                 gameObject.transform.SetPositionAndRotation(new Vector3(neighbors.First().X, -0.9f, neighbors.First().Y), rot);
                 isFull[cellIndex] = true;
+                whoInCell[cellIndex] = whoInDefault;
+                whoInCell[defaultCellIndex] = null;
                 isFull[defaultCellIndex] = false;
             }
         }

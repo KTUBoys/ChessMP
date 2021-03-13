@@ -17,13 +17,14 @@ namespace Assets.Scripts
             new Point(-75, -69), new Point(-65, -69), new Point(-55, -69), new Point(-45, -69), new Point(-35, -69), new Point(-25, -69), new Point(-15, -69), new Point(-5, -69),
         };
 
-        public static bool[] isFull = new bool[64];
+        public static bool[] IsFull = new bool[64];
+        public static string[] WhoInCell = new string[64];
 
         public static void Initialize()
         {
-            for (var i = 0; i < isFull.Length; i++)
+            for (var i = 0; i < IsFull.Length; i++)
             {
-                isFull[i] = false;
+                IsFull[i] = false;
             }
         }
     }

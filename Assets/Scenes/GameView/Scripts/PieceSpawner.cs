@@ -79,17 +79,26 @@ namespace Assets.Scenes.GameView.Scripts
 
         private void SpawnPaws(float x, float z, Quaternion quaternion, int color)
         {
-            var isFull = ChessBoard.isFull;
+            var isFull = ChessBoard.IsFull;
+            var whoInCell = ChessBoard.WhoInCell;
             PawnPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
             var index = 8;
-            if (color == 1) index = 48;
+            var c = "Black";
+            if (color == 1)
+            {
+                c = "White";
+                index = 48;
+            }
             for (var i = 0; i < 8; i++)
             {
+                var pawnName = $"{c} Pawn {i}";
                 var pawn = Instantiate(PawnPiece, new Vector3(x, YAxis, z), quaternion);
                 pawn.AddComponent<PawnMovement>();
                 pawn.AddComponent<BoxCollider>();
+                whoInCell[index] = pawnName;
+                pawn.name = pawnName;
                 isFull[index] = true;
-                index += 1;
+                index++;
                 x += 10;
             }
         }
