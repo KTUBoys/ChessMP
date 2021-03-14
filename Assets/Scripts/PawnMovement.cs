@@ -10,12 +10,19 @@ namespace Assets.Scripts
     /// </summary>
     public class PawnMovement : GeneralMovement
     {
+        private MovmenttSoundManager soundManager; //for sound effect purposes
+
         private Quaternion _rot;
         private Vector3 _defaultPos;
         private Vector3 _mOffset;        // mouse offset
         private float _mZCoord;          // mouse Z axis coords
         private Vector3 _curPos;
         private Color _color;
+
+        private void Awake()
+        {
+            soundManager = GameObject.FindGameObjectWithTag("SoundManager").GetComponent<MovmenttSoundManager>();
+        }
 
         [UsedImplicitly]    // for resharper
         void OnMouseDown()
@@ -48,6 +55,8 @@ namespace Assets.Scripts
                 SetPosition(_defaultPos, _rot);
             }
             else MoveToNearest(_curPos, _defaultPos, _rot);
+
+            soundManager.MoveAPiece();
         }
 
         private void GetPath()
