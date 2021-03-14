@@ -12,6 +12,7 @@ namespace Assets.Scripts
     /// </summary>
     public class PawnMovement : GeneralMovement
     {
+        private MovementSoundScript soundManager;
         private Quaternion _rot;
         private Vector3 _defaultPos;
         private Vector3 _mOffset;        // mouse offset
@@ -19,11 +20,17 @@ namespace Assets.Scripts
         private Vector3 _curPos;
         private Color _color;
 
+        private void Awake()
+        {
+            soundManager = GameObject.FindGameObjectWithTag("SoundManager").GetComponent<MovementSoundScript>();
+        }
+
         [UsedImplicitly]    // for resharper
         void OnMouseDown()
         {
             MouseDown(out _rot, out _defaultPos, out _mZCoord, out _mOffset);
             GetPath();
+            soundManager.TakeAPiece();
         }
 
         [UsedImplicitly]    // For resharper
@@ -41,6 +48,7 @@ namespace Assets.Scripts
             {
                 Destroy(obj);
             }
+            soundManager.MoveAPiece();
         }
 
         private void Move()
