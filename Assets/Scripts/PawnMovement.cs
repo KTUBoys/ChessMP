@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Drawing;
 using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
+using Color = UnityEngine.Color;
 
 namespace Assets.Scripts
 {
@@ -82,6 +84,33 @@ namespace Assets.Scripts
                 path.name = "path";
                 path.tag = "path";
             }
+        }
+        public bool LegalMove(Vector3 curPos, Vector3 defaultPos)
+        {
+            // Take chessboard current stats
+            var cells = ChessBoard.BoardCoords;
+            var isFull = ChessBoard.IsFull;
+
+            var neighbor = GetNeighbor(cells, new Point((int)curPos.x, (int)curPos.z));
+
+            if (isFull[Array.FindIndex(cells, cell => cell.X == neighbor[0].X && cell.Y == neighbor[0].Y)])
+            {
+                return false;
+            }
+
+            if (gameObject.name.Split(' ')[0].ToLower() == "white" && Math.Abs(defaultPos.z - (-59)) < 0.5)
+            {
+                if (Math.Abs(curPos.z - defaultPos.z) < 0.5)
+                {
+                    return true;
+                }
+            }
+
+            if (Math.Abs(curPos.x - defaultPos.x) < 1)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -22,25 +22,7 @@ namespace Assets.Scripts
             return curPos.z >= topBorder || curPos.z <= bottomBorder;
         }
 
-        public bool LegalMove(Vector3 curPos, Vector3 defaultPos)
-        {
-            // Take chessboard current stats
-            var cells = ChessBoard.BoardCoords;
-            var isFull = ChessBoard.IsFull;
-
-            var neighbor = GetNeighbor(cells, new Point((int)curPos.x, (int)curPos.z));
-
-            if (isFull[Array.FindIndex(cells, cell => cell.X == neighbor[0].X && cell.Y == neighbor[0].Y)])
-            {
-                return false;
-            }
-            
-            if (Math.Abs(curPos.x - (defaultPos.x - 10)) < 1 || Math.Abs(curPos.x - (defaultPos.x + 10)) < 1)
-            {
-                return false;
-            }
-            return true;
-        }
+       
 
         public void MouseDown(out Quaternion rot, out Vector3 defaultPos, out float mZCoord, out Vector3 mOffset)
         {
@@ -142,7 +124,7 @@ namespace Assets.Scripts
             return Camera.main.ScreenToWorldPoint(mousePoint);
         }
 
-        private Point[] GetNeighbor(IEnumerable<Point> cells, Point origin)
+        public Point[] GetNeighbor(IEnumerable<Point> cells, Point origin)
         {
             // A neat LinQ expression for finding nearest neighbor
             return cells.Select(p => new { Point = p, Distance = CalculateTwoDistances(origin, p) })
