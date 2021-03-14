@@ -48,12 +48,6 @@ namespace Assets.Scenes.GameView.Scripts
             SpawnFigures(xPoints, zPoints, pieceAngles);
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
-
         private void SpawnFigures([NotNull] IReadOnlyList<int> xPoints, [NotNull] IReadOnlyList<int> zPoints, [NotNull] IReadOnlyList<Quaternion> angles)
         {
             // Spawn White figures
@@ -93,7 +87,7 @@ namespace Assets.Scenes.GameView.Scripts
             {
                 var pawnName = $"{c} Pawn {i}";
                 var pawn = Instantiate(PawnPiece, new Vector3(x, YAxis, z), quaternion);
-                pawn.AddComponent<PawnMovement>();
+                var pawnMovement = pawn.AddComponent<PawnMovement>();
                 pawn.AddComponent<BoxCollider>();
                 whoInCell[index] = pawnName;
                 pawn.name = pawnName;

@@ -1,4 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
+using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -8,58 +10,78 @@ namespace Assets.Scripts
     /// </summary>
     public class PawnMovement : GeneralMovement
     {
-        private Vector3 pos;
-        private Quaternion rot;
-        private Vector3 defaultPos;
-        private Vector3 mOffset;        // mouse offset
-        private float mZCoord;          // mouse Z axis coords
-        private Vector3 curPos;
+        private Quaternion _rot;
+        private Vector3 _defaultPos;
+        private Vector3 _mOffset;        // mouse offset
+        private float _mZCoord;          // mouse Z axis coords
+        private Vector3 _curPos;
+        private Color _color;
 
         [UsedImplicitly]    // for resharper
         void OnMouseDown()
         {
-            pos = gameObject.transform.position;        // Get current position
-            rot = gameObject.transform.rotation;        // Get current rotation
-            defaultPos = pos;                           // Put current position to default, to get default position later for any illegal moves
-
-
-            // Get current mouse position, make offset.
-            gameObject.transform.SetPositionAndRotation(new Vector3(pos.x, pos.y + 1f, pos.z), rot);
-            mZCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
-            mOffset = gameObject.transform.position - GetMouseWorldPos();
+            MouseDown(out _rot, out _defaultPos, out _mZCoord, out _mOffset);
+            GetPath();
         }
 
         [UsedImplicitly]    // For resharper
         void OnMouseDrag()
         {
-            curPos = transform.position = new Vector3(GetMouseWorldPos().x + mOffset.x, transform.position.y,
-                GetMouseWorldPos().z + mOffset.z);
+            MouseDrag(_mOffset, out _curPos, _mZCoord);
         }
         
-        [UsedImplicitly]    // For reshaper
+        [UsedImplicitly]    // For resharper
         void OnMouseUp()
         {
+            Cursor.visible = true;
             Move();
-        }
-
-        private Vector3 GetMouseWorldPos()
-        {
-            var mousePoint = Input.mousePosition;
-
-            mousePoint.z = mZCoord * 1.45f;     // Multiplying by number due to mouse not actually following the piece correctly
-            mousePoint.x *= 0.7f;               // Doing the same to X axis, so the piece doesn't move too fast
-
-            return Camera.main.ScreenToWorldPoint(mousePoint);
+            foreach (var obj in GameObject.FindGameObjectsWithTag("path"))
+            {
+                Destroy(obj);
+            }
         }
 
         private void Move()
         {
-            // Check for out of borders
-            if (OutOfBorders(curPos))
+            if (OutOfBorders(_curPos) || !LegalMove(_curPos, _defaultPos))
             {
-                gameObject.transform.SetPositionAndRotation(defaultPos, rot);
-            }   // Else move to the nearest applicable cell.
-            else MoveToNearest(curPos, defaultPos, rot);
+                SetPosition(_defaultPos, _rot);
+            }
+            else MoveToNearest(_curPos, _defaultPos, _rot);
+        }
+
+        private void GetPath()
+        {
+            switch (gameObject.name.Split(' ')[0].ToLower())
+            {
+                case "white" when Math.Abs(_defaultPos.z - -59) < 1:
+                    SpawnMovementPath(10, 2);
+                    break;
+                case "white" when Math.Abs(_defaultPos.z - -59) > 1:
+                    SpawnMovementPath(10, 1);
+                    break;
+                case "black" when Math.Abs(_defaultPos.z - -9) < 1:
+                    SpawnMovementPath(-10, 2);
+                    break;
+                default:
+                    SpawnMovementPath(-10, 1);
+                    break;
+            }
+        }
+
+        private void SpawnMovementPath(float add, int times)
+        {
+            var plane = ObjectFactory.CreatePrimitive(PrimitiveType.Plane);
+            Destroy(plane);
+            for (var i = 1; i <= times; i++)
+            {
+                var path = Instantiate(plane, new Vector3(_defaultPos.x, -0.915f , _defaultPos.z + add * i),
+                    Quaternion.identity);
+                path.GetComponent<MeshRenderer>().material.color = Color.green;
+
+                path.name = "path";
+                path.tag = "path";
+            }
         }
     }
 }

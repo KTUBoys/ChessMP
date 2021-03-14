@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using UnityEngine;
@@ -21,6 +22,45 @@ namespace Assets.Scripts
             return curPos.z >= topBorder || curPos.z <= bottomBorder;
         }
 
+        public bool LegalMove(Vector3 curPos, Vector3 defaultPos)
+        {
+            // Take chessboard current stats
+            var cells = ChessBoard.BoardCoords;
+            var isFull = ChessBoard.IsFull;
+
+            var neighbor = GetNeighbor(cells, new Point((int)curPos.x, (int)curPos.z));
+
+            if (isFull[Array.FindIndex(cells, cell => cell.X == neighbor[0].X && cell.Y == neighbor[0].Y)])
+            {
+                return false;
+            }
+            
+            if (Math.Abs(curPos.x - (defaultPos.x - 10)) < 1 || Math.Abs(curPos.x - (defaultPos.x + 10)) < 1)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public void MouseDown(out Quaternion rot, out Vector3 defaultPos, out float mZCoord, out Vector3 mOffset)
+        {
+            var pos = gameObject.transform.position;        // Get current position
+            rot = gameObject.transform.rotation;        // Get current rotation
+            defaultPos = pos;                           // Put current position to default, to get default position later for any illegal moves
+            Cursor.visible = false;
+
+            // Get current mouse position, make offset.
+            gameObject.transform.SetPositionAndRotation(new Vector3(pos.x, pos.y + 1f, pos.z), rot);
+            mZCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
+            mOffset = gameObject.transform.position - GetMouseWorldPos(mZCoord);
+        }
+
+        public void MouseDrag(Vector3 mOffset, out Vector3 curPos, float mZCoord)
+        {
+            curPos = transform.position = new Vector3(GetMouseWorldPos(mZCoord).x + mOffset.x, transform.position.y,
+                GetMouseWorldPos(mZCoord).z + mOffset.z);
+        }
+
         /// <summary>
         /// Pretty complicated method
         /// </summary>
@@ -38,12 +78,7 @@ namespace Assets.Scripts
             // Get the current coords (where it was taken from) and put it into Point for comparison in for NN
             var origin = new Point((int)curPos.x, (int)curPos.z);
 
-            // A neat LinQ expression for finding nearest neighbor
-            var neighbors = cells.Select(p => new { Point = p, Distance = CalculateTwoDistances(origin, p) })
-                .Where(pointAndDistance => pointAndDistance.Distance <= Math.Pow(7, 2))
-                .OrderBy(pointAndDistance => pointAndDistance.Distance)
-                .Select(pointAndDistance => pointAndDistance.Point)
-                .ToArray();
+            var neighbors = GetNeighbor(cells, origin);
 
             // Get indexes for default and nearest cell found to check if it's empty
             var defaultCellIndex = Array.FindIndex(cells, point => point.X == (int)defaultPos.x && point.Y == (int)defaultPos.z);
@@ -51,6 +86,7 @@ namespace Assets.Scripts
 
             // Variable for easier access
             var whoInDefault = whoInCell[defaultCellIndex];
+            var position = new Vector3(neighbors.First().X, -0.9f, neighbors.First().Y);
 
             // Check if destination point is empty
             if (isFull[cellIndex])
@@ -62,12 +98,12 @@ namespace Assets.Scripts
                 if (whatColorO == whatColorD)
                 {
                     // Tried to take out our own piece. Move the piece back to its place
-                    gameObject.transform.SetPositionAndRotation(defaultPos, rot);
+                    SetPosition(defaultPos, rot);
                 }
                 else
                 {
                     // Good, the piece was actually our enemy. Let's take it down
-                    gameObject.transform.SetPositionAndRotation(new Vector3(neighbors.First().X, -0.9f, neighbors.First().Y), rot);
+                    SetPosition(position, rot);
                     isFull[cellIndex] = true;
                     whoInCell[cellIndex] = whoInDefault;
                     whoInCell[defaultCellIndex] = null;
@@ -78,7 +114,7 @@ namespace Assets.Scripts
             else
             {
                 // Empty destination, move successful
-                gameObject.transform.SetPositionAndRotation(new Vector3(neighbors.First().X, -0.9f, neighbors.First().Y), rot);
+                SetPosition(position, rot);
                 isFull[cellIndex] = true;
                 whoInCell[cellIndex] = whoInDefault;
                 whoInCell[defaultCellIndex] = null;
@@ -86,10 +122,34 @@ namespace Assets.Scripts
             }
         }
 
+        public void SetPosition(Vector3 position, Quaternion rotation)
+        {
+            gameObject.transform.SetPositionAndRotation(position, rotation);
+        }
+
         private static float CalculateTwoDistances(Point originPoint, Point destinationPoint)
         {
             return (float)(Math.Pow(originPoint.X - destinationPoint.X, 2)
                             + Math.Pow(originPoint.Y - destinationPoint.Y, 2));
+        }
+
+        private static Vector3 GetMouseWorldPos(float mZCoord)
+        {
+            var mousePoint = Input.mousePosition;
+
+            mousePoint.z = mZCoord;     // Multiplying by number due to mouse not actually following the piece correctly
+
+            return Camera.main.ScreenToWorldPoint(mousePoint);
+        }
+
+        private Point[] GetNeighbor(IEnumerable<Point> cells, Point origin)
+        {
+            // A neat LinQ expression for finding nearest neighbor
+            return cells.Select(p => new { Point = p, Distance = CalculateTwoDistances(origin, p) })
+                .Where(pointAndDistance => pointAndDistance.Distance <= Math.Pow(7, 2))
+                .OrderBy(pointAndDistance => pointAndDistance.Distance)
+                .Select(pointAndDistance => pointAndDistance.Point)
+                .ToArray();
         }
     }
 }
