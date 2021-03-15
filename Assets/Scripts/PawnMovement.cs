@@ -81,7 +81,7 @@ namespace Assets.Scripts
 
         private void SpawnMovementPath(float add, int times)
         {
-            var plane = ObjectFactory.CreatePrimitive(PrimitiveType.Plane);
+            var plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
             Destroy(plane);
             for (var i = 1; i <= times; i++)
             {
