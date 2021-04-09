@@ -17,9 +17,9 @@ namespace Assets.Scripts.Pieces
     {
         public PieceType Type;
 
-        protected Vector2Int[] RookDirections = {new Vector2Int(0,10), new Vector2Int(10, 0),
+        protected readonly Vector2Int[] RookDirections = {new Vector2Int(0,10), new Vector2Int(10, 0),
             new Vector2Int(0, -10), new Vector2Int(-10, 0)};
-        protected Vector2Int[] BishopDirections = {new Vector2Int(10,10), new Vector2Int(10, -10),
+        protected readonly Vector2Int[] BishopDirections = {new Vector2Int(10,10), new Vector2Int(10, -10),
             new Vector2Int(-10, -10), new Vector2Int(-10, 10)};
 
         public abstract List<Vector2Int> MoveLocations(Vector2Int gridPoint);

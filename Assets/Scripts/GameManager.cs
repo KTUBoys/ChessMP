@@ -1,10 +1,7 @@
-﻿using System;
+﻿using Assets.Scripts.Pieces;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.IO;
-using System.Text;
-using Assets.Scenes.GameView.Scripts;
-using Assets.Scripts.Pieces;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -26,7 +23,7 @@ namespace Assets.Scripts
 
         public GameObject KnightPiece;
 
-        private float YAxis = -0.9f;
+        private readonly float YAxis = -0.9f;
 
         private GameObject[,] _pieces;
         private List<GameObject> _movedPawns;
@@ -36,15 +33,19 @@ namespace Assets.Scripts
         public Player CurrentPlayer;
         public Player OtherPlayer;
 
-        void Awake() => Game = this;
-        void Start()
+        private void Awake()
+        {
+            Game = this;
+        }
+
+        private void Start()
         {
             _pieces = new GameObject[8, 8];
             _movedPawns = new List<GameObject>();
-        
+
             _white = new Player("white", true);
             _black = new Player("black", false);
-            
+
             CurrentPlayer = _white;
             OtherPlayer = _black;
 
@@ -234,25 +235,13 @@ namespace Assets.Scripts
             _pieces[column, row] = piece;
         }
 
-        void SelectPieceAtGrid(Vector2Int gridPoint)
-        {
-            var selected = _pieces[gridPoint.x, gridPoint.y];
-            if (selected)
-            {
-                Board.SelectPiece(selected);
-            }
-        }
-
         internal List<Vector2Int> LegalMoves(GameObject pieceGameObject)
         {
             var piece = pieceGameObject.GetComponent<Piece>();
             var gridPoint = GridForPiece(pieceGameObject);
             var locations = piece.MoveLocations(gridPoint);
-
-            locations.RemoveAll(gp => gp.x < -80 || gp.y < -72 || gp.x > 0 || gp.y > 0);
-
+            locations.RemoveAll(gp => gp.x < -80 || gp.y < -72 || gp.x > 2 || gp.y > 2);
             locations.RemoveAll(FriendlyPieceAt);
-
             return locations;
         }
 
@@ -271,10 +260,15 @@ namespace Assets.Scripts
             Board.MovePiece(piece, gridPoint);
         }
 
+        private void PawnMoved(GameObject pawn)
+        {
+            _movedPawns.Add(pawn);
+        }
 
-        void PawnMoved(GameObject pawn) => _movedPawns.Add(pawn);
-
-        internal bool HasPawnMoved(GameObject pawn) => _movedPawns.Contains(pawn);
+        internal bool HasPawnMoved(GameObject pawn)
+        {
+            return _movedPawns.Contains(pawn);
+        }
 
         internal void CapturePieceAt(Vector2Int gridPoint)
         {
@@ -284,21 +278,31 @@ namespace Assets.Scripts
                 Debug.Log(CurrentPlayer.Name + " winner!");
                 Destroy(Board.GetComponent<TileSelector>());
             }
+            Destroy(capturePiece);
         }
 
-        internal void SelectPiece(GameObject piece) => Board.SelectPiece(piece);
+        internal void SelectPiece(GameObject piece)
+        {
+            Board.SelectPiece(piece);
+        }
 
-        internal void DeselectPiece(GameObject piece) => Board.DeselectPiece(piece);
+        internal void DeselectPiece(GameObject piece)
+        {
+            Board.DeselectPiece(piece);
+        }
 
-        internal bool IsCurrentPlayerPiece(GameObject piece) => CurrentPlayer.Pieces.Contains(piece);
+        internal bool IsCurrentPlayerPiece(GameObject piece)
+        {
+            return CurrentPlayer.Pieces.Contains(piece);
+        }
 
         internal GameObject PieceAtGrid(Vector2Int gridPoint)
         {
-            if (gridPoint.x > -80 || gridPoint.y > -71 || gridPoint.x < -7 || gridPoint.y < 0)
+            if (gridPoint.x > -80 || gridPoint.y > -71 || gridPoint.x < 2 || gridPoint.y < 2)
             {
-                for (int i = 0; i < 8; i++)
+                for (var i = 0; i < 8; i++)
                 {
-                    for (int j = 0; j < 8; j++)
+                    for (var j = 0; j < 8; j++)
                     {
                         var point = ChessBoard.GridPoints[i, j];
                         if (Math.Abs(gridPoint.x - point.x) < 4 && Math.Abs(gridPoint.y - point.y) < 4)
@@ -311,7 +315,7 @@ namespace Assets.Scripts
             return null;
         }
 
-        internal Vector2Int GridForPiece(GameObject pieceGameObject)
+        private Vector2Int GridForPiece(GameObject pieceGameObject)
         {
             for (var i = 0; i < 8; i++)
             {
@@ -327,11 +331,11 @@ namespace Assets.Scripts
             return new Vector2Int(-1, -1);
         }
 
-        internal Vector2Int PointForPiece(GameObject pieceGameObject)
+        private Vector2Int PointForPiece(GameObject pieceGameObject)
         {
-            for (int i = 0; i < 8; i++)
+            for (var i = 0; i < 8; i++)
             {
-                for (int j = 0; j < 8; j++)
+                for (var j = 0; j < 8; j++)
                 {
                     if (_pieces[i, j] == pieceGameObject)
                     {
@@ -342,7 +346,7 @@ namespace Assets.Scripts
 
             return new Vector2Int(-1, -1);
         }
-            
+
         private bool FriendlyPieceAt(Vector2Int gridPoint)
         {
             var piece = PieceAtGrid(gridPoint);

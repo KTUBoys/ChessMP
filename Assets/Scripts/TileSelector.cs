@@ -9,8 +9,7 @@ namespace Assets.Scripts
 
         void Start()
         {
-            var gridPoint = ChessBoard.GridPoint(0, 0);
-            var point = ChessBoard.PointFromGrid(gridPoint);
+            var point = ChessBoard.PointFromGrid(new Vector2Int(0, 0));
             _tileHighlight = Instantiate(TileHighlightPrefab, point, Quaternion.identity, gameObject.transform);
             _tileHighlight.SetActive(false);
         }

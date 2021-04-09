@@ -38,7 +38,6 @@ namespace Assets.Scripts
                     (int) ChessBoard.PointFromGrid(gridPoint).z);
                 if (Input.GetMouseButtonDown(0))
                 {
-                    Debug.Log(_movingPiece);
                     if (!_moveLocations.Contains(gp))
                     {
                         CancelMove();
@@ -87,7 +86,6 @@ namespace Assets.Scripts
 
             if (_moveLocations.Count == 0)
             {
-                Debug.Log("No move locations found");
                 CancelMove();
             }
 
@@ -96,12 +94,10 @@ namespace Assets.Scripts
                 GameObject highlight;
                 if (GameManager.Game.PieceAtGrid(loc))
                 {
-                    Debug.Log($"Enemy at location {loc}");
                     highlight = Instantiate(AttackLocationPrefab, ChessBoard.PointFromGrid(loc), Quaternion.identity, gameObject.transform);
                 }
                 else
                 {
-                    Debug.Log("No enemy");
                     highlight = Instantiate(MoveLocationPrefab, ChessBoard.PointFromGrid(loc), Quaternion.identity, gameObject.transform);
                 }
                 _locationHighlights.Add(highlight);

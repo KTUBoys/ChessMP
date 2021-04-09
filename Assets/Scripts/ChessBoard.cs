@@ -26,7 +26,7 @@ namespace Assets.Scripts
         public static Vector3 PointFromGrid(Vector2Int gridPoint)
         {
             float x = gridPoint.x;
-            float z = gridPoint.y;
+            float y = gridPoint.y;
 
             for (var i = 0; i < 8; i++)
             {
@@ -36,16 +36,11 @@ namespace Assets.Scripts
                     if (Math.Abs(gridPoint.x - point.x) < 4 && Math.Abs(gridPoint.y - point.y) < 4)
                     {
                         x = point.x;
-                        z = point.y;
+                        y = point.y;
                     }
                 }
             }
-            return new Vector3(x, -0.8f, z);
-        }
-
-        public static Vector2Int GridPoint(int col, int row)
-        {
-            return new Vector2Int(col ,row);
+            return new Vector3(x, -0.8f, y);
         }
 
         public static Vector2Int GridFromPoint(Vector3 point)
@@ -67,8 +62,8 @@ namespace Assets.Scripts
                     var point = GridPoints[i, j];
                     if (Math.Abs(gridPoint.x - point.x) < 4 && Math.Abs(gridPoint.y - point.y) < 4)
                     {
-                        x = j;
-                        y = i;
+                        x = i;
+                        y = j;
                     }
                 }
             }
