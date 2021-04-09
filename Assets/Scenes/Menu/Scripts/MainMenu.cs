@@ -1,25 +1,28 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
+namespace Assets.Scenes.Menu.Scripts
 {
-    public void Play()
+    public class MainMenu : MonoBehaviour
     {
-        SceneManager.LoadSceneAsync("Scenes/GameView");
-        Debug.Log("Switch scene to GameView");
-    }
-
-    public void Exit()
-    {
-        Debug.Log("Exit");
-        Application.Quit();
-    }
-
-    public void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        public void Play()
         {
+            SceneManager.LoadSceneAsync("Scenes/GameView");
+            Debug.Log("Switch scene to GameView");
+        }
+
+        public void Exit()
+        {
+            Debug.Log("Exit");
             Application.Quit();
+        }
+
+        public void Update()
+        {
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
         }
     }
 }
