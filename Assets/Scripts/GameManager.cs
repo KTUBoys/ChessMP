@@ -8,33 +8,28 @@ namespace Assets.Scripts
 {
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Game;
         public ChessBoard Board;
-
         public GameObject PawnPiece;
-
         public GameObject RookPiece;
-
         public GameObject QueenPiece;
-
         public GameObject KingPiece;
-
         public GameObject BishopPiece;
-
         public GameObject KnightPiece;
+        public MovementSoundScript SoundManager;
 
-        private readonly float YAxis = -0.9f;
+        public static GameManager Game;
 
+        private readonly float _yAxis = -0.9f;
         private GameObject[,] _pieces;
         private List<GameObject> _movedPawns;
-
         private Player _white;
         private Player _black;
         public Player CurrentPlayer;
-        public Player OtherPlayer;
+        private Player _otherPlayer;
 
         private void Awake()
         {
+            SoundManager = GameObject.FindGameObjectWithTag("SoundManager").GetComponent<MovementSoundScript>();
             Game = this;
         }
 
@@ -47,7 +42,7 @@ namespace Assets.Scripts
             _black = new Player("black", false);
 
             CurrentPlayer = _white;
-            OtherPlayer = _black;
+            _otherPlayer = _black;
 
             InitialSetup();
         }
@@ -113,7 +108,7 @@ namespace Assets.Scripts
             for (var i = 0; i < 8; i++)
             {
                 var pawnName = $"{c} Pawn {i + 1}";
-                var pawn = Instantiate(PawnPiece, new Vector3(x, YAxis, z), quaternion);
+                var pawn = Instantiate(PawnPiece, new Vector3(x, _yAxis, z), quaternion);
                 pawn.AddComponent<BoxCollider>();
                 var piece = pawn.AddComponent<Pawn>();
                 piece.Type = PieceType.Pawn;
@@ -137,7 +132,7 @@ namespace Assets.Scripts
             RookPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
             for (var i = 0; i < 2; i++)
             {
-                var rook = Instantiate(RookPiece, new Vector3(x, YAxis, z), quaternion);
+                var rook = Instantiate(RookPiece, new Vector3(x, _yAxis, z), quaternion);
                 rook.AddComponent<BoxCollider>();
                 var piece = rook.AddComponent<Rook>();
                 piece.Type = PieceType.Rook;
@@ -158,7 +153,7 @@ namespace Assets.Scripts
             KnightPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
             for (var i = 0; i < 2; i++)
             {
-                var knight = Instantiate(KnightPiece, new Vector3(x, YAxis, z), quaternion);
+                var knight = Instantiate(KnightPiece, new Vector3(x, _yAxis, z), quaternion);
                 knight.AddComponent<BoxCollider>();
                 var piece = knight.AddComponent<Knight>();
                 piece.Type = PieceType.Knight;
@@ -179,7 +174,7 @@ namespace Assets.Scripts
             BishopPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
             for (var i = 0; i < 2; i++)
             {
-                var bishop = Instantiate(BishopPiece, new Vector3(x, YAxis, z), quaternion);
+                var bishop = Instantiate(BishopPiece, new Vector3(x, _yAxis, z), quaternion);
                 bishop.AddComponent<BoxCollider>();
                 var piece = bishop.AddComponent<Bishop>();
                 piece.Type = PieceType.Bishop;
@@ -198,7 +193,7 @@ namespace Assets.Scripts
         private void SpawnKing(float x, float z, Quaternion quaternion, int color)
         {
             KingPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
-            var king = Instantiate(KingPiece, new Vector3(x, YAxis, z), quaternion);
+            var king = Instantiate(KingPiece, new Vector3(x, _yAxis, z), quaternion);
             king.AddComponent<BoxCollider>();
             var piece = king.AddComponent<King>();
             piece.Type = PieceType.King;
@@ -215,7 +210,7 @@ namespace Assets.Scripts
         private void SpawnQueen(float x, float z, Quaternion quaternion, int color)
         {
             QueenPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
-            var queen = Instantiate(QueenPiece, new Vector3(x, YAxis, z), quaternion);
+            var queen = Instantiate(QueenPiece, new Vector3(x, _yAxis, z), quaternion);
             queen.AddComponent<BoxCollider>();
             var piece = queen.AddComponent<Queen>();
             piece.Type = PieceType.Queen;
@@ -356,14 +351,14 @@ namespace Assets.Scripts
                 return false;
             }
 
-            return !OtherPlayer.Pieces.Contains(piece);
+            return !_otherPlayer.Pieces.Contains(piece);
         }
 
         public void NextPlayer()
         {
             var temp = CurrentPlayer;
-            CurrentPlayer = OtherPlayer;
-            OtherPlayer = temp;
+            CurrentPlayer = _otherPlayer;
+            _otherPlayer = temp;
         }
     }
 }

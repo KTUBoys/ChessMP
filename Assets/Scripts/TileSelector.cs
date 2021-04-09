@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using static Assets.Scripts.ChessBoard;
+using static Assets.Scripts.GameManager;
 
 namespace Assets.Scripts
 {
@@ -9,7 +11,7 @@ namespace Assets.Scripts
 
         void Start()
         {
-            var point = ChessBoard.PointFromGrid(new Vector2Int(0, 0));
+            var point = PointFromGrid(new Vector2Int(0, 0));
             _tileHighlight = Instantiate(TileHighlightPrefab, point, Quaternion.identity, gameObject.transform);
             _tileHighlight.SetActive(false);
         }
@@ -20,17 +22,18 @@ namespace Assets.Scripts
             if (Physics.Raycast(ray, out var hit))
             {
                 var point = hit.point;
-                var gridPoint = ChessBoard.GridFromPoint(point);
+                var gridPoint = GridFromPoint(point);
                 _tileHighlight.SetActive(true);
                 _tileHighlight.transform.position =
-                    ChessBoard.PointFromGrid(gridPoint);
+                    PointFromGrid(gridPoint);
                 if (Input.GetMouseButtonDown(0))
                 {
-                    var selectedPiece = GameManager.Game.PieceAtGrid(gridPoint);
-                    ChessBoard.DefaultMaterial = selectedPiece?.GetComponent<MeshRenderer>().material;
-                    if (GameManager.Game.IsCurrentPlayerPiece(selectedPiece))
+                    Game.SoundManager.TakeAPiece();
+                    var selectedPiece = Game.PieceAtGrid(gridPoint);
+                    DefaultMaterial = selectedPiece?.GetComponent<MeshRenderer>().material;
+                    if (Game.IsCurrentPlayerPiece(selectedPiece))
                     {
-                        GameManager.Game.SelectPiece(selectedPiece);
+                        Game.SelectPiece(selectedPiece);
                         ExitState(selectedPiece);
                     }
                 }

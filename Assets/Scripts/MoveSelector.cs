@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static Assets.Scripts.GameManager;
 
 namespace Assets.Scripts
 {
@@ -44,15 +45,16 @@ namespace Assets.Scripts
                         return;
                     }
                     
-                    if (GameManager.Game.PieceAtGrid(gridPoint) == null)
+                    if (Game.PieceAtGrid(gridPoint) == null)
                     {
-                        GameManager.Game.Move(_movingPiece, gridPoint);
+                        Game.Move(_movingPiece, gridPoint);
                     }
                     else
                     {
-                        GameManager.Game.CapturePieceAt(gridPoint);
-                        GameManager.Game.Move(_movingPiece, gridPoint);
+                        Game.CapturePieceAt(gridPoint);
+                        Game.Move(_movingPiece, gridPoint);
                     }
+                    Game.SoundManager.MoveAPiece();
                     ExitState();
                 }
             }
@@ -72,7 +74,7 @@ namespace Assets.Scripts
             }
 
             _tileHighlight.SetActive(false);
-            GameManager.Game.DeselectPiece(_movingPiece);
+            Game.DeselectPiece(_movingPiece);
             var selector = GetComponent<TileSelector>();
             selector.EnterState();
         }
@@ -81,7 +83,7 @@ namespace Assets.Scripts
         {
             _movingPiece = piece;
             this.enabled = true;
-            _moveLocations = GameManager.Game.LegalMoves(_movingPiece);
+            _moveLocations = Game.LegalMoves(_movingPiece);
             _locationHighlights = new List<GameObject>();
 
             if (_moveLocations.Count == 0)
@@ -92,7 +94,7 @@ namespace Assets.Scripts
             foreach (var loc in _moveLocations)
             {
                 GameObject highlight;
-                if (GameManager.Game.PieceAtGrid(loc))
+                if (Game.PieceAtGrid(loc))
                 {
                     highlight = Instantiate(AttackLocationPrefab, ChessBoard.PointFromGrid(loc), Quaternion.identity, gameObject.transform);
                 }
@@ -111,9 +113,9 @@ namespace Assets.Scripts
             mainCamera.transform.Rotate(Vector3.back, 180f);
             var selector = GetComponent<TileSelector>();
             _tileHighlight.SetActive(false);
-            GameManager.Game.DeselectPiece(_movingPiece);
+            Game.DeselectPiece(_movingPiece);
             _movingPiece = null;
-            GameManager.Game.NextPlayer();
+            Game.NextPlayer();
             selector.EnterState();
             foreach (var highlight in _locationHighlights)
             {
