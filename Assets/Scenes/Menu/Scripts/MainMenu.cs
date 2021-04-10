@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Assets.Scenes.Menu.Scripts
 {
@@ -17,11 +18,12 @@ namespace Assets.Scenes.Menu.Scripts
             Application.Quit();
         }
 
-        public void Update()
+        // Resets button scaling to avoid stuck scaling on animations
+        public void ResetButtonScale()
         {
-            if(Input.GetKeyDown(KeyCode.Escape))
+            foreach (var btn in gameObject.GetComponentsInChildren<Button>())
             {
-                Application.Quit();
+                btn.transform.localScale = new Vector3(1, 1);
             }
         }
     }
