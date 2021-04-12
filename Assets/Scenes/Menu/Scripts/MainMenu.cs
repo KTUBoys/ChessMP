@@ -1,25 +1,30 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class MainMenu : MonoBehaviour
+namespace Assets.Scenes.Menu.Scripts
 {
-    public void Play()
+    public class MainMenu : MonoBehaviour
     {
-        SceneManager.LoadSceneAsync("Scenes/GameView");
-        Debug.Log("Switch scene to GameView");
-    }
-
-    public void Exit()
-    {
-        Debug.Log("Exit");
-        Application.Quit();
-    }
-
-    public void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        public void Play()
         {
+            SceneManager.LoadSceneAsync("Scenes/GameView");
+            Debug.Log("Switch scene to GameView");
+        }
+
+        public void Exit()
+        {
+            Debug.Log("Exit");
             Application.Quit();
+        }
+
+        // Resets button scaling to avoid stuck scaling on animations
+        public void ResetButtonScale()
+        {
+            foreach (var btn in gameObject.GetComponentsInChildren<Button>())
+            {
+                btn.transform.localScale = new Vector3(1, 1);
+            }
         }
     }
 }
