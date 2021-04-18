@@ -8,6 +8,7 @@ TagManager:
   - SoundManager
   - PieceTakeSound
   - PieceMoveSound
+  - Sounds
   layers:
   - Default
   - TransparentFX
