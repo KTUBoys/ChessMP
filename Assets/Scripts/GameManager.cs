@@ -240,7 +240,7 @@ namespace Assets.Scripts
             return locations;
         }
 
-        internal void Move(GameObject piece, Vector2Int gridPoint)
+        internal virtual void Move(GameObject piece, Vector2Int gridPoint)
         {
             var pieceComponent = piece.GetComponent<Piece>();
             if (pieceComponent.Type == PieceType.Pawn && !HasPawnMoved(piece))

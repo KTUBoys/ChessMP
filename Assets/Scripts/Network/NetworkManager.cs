@@ -7,9 +7,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private UIManager UIManager;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
+
     private void Update()
     {
-        Debug.Log(PhotonNetwork.NetworkClientState.ToString());
         UIManager.SetConnectionStatusText(PhotonNetwork.NetworkClientState.ToString());
     }
     public void OnPlayOnlineClick()
@@ -32,5 +37,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         PhotonNetwork.CreateRoom(null);
+    }
+
+    public override void OnJoinedRoom()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("GameView");
+        }
+        
     }
 }
