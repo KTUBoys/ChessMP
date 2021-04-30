@@ -109,8 +109,6 @@ namespace Assets.Scripts
         private void ExitState()
         {
             this.enabled = false;
-            var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-            mainCamera.transform.Rotate(Vector3.back, 180f);
             var selector = GetComponent<TileSelector>();
             _tileHighlight.SetActive(false);
             Game.DeselectPiece(_movingPiece);

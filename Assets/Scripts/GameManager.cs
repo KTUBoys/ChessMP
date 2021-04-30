@@ -18,9 +18,11 @@ namespace Assets.Scripts
         public MovementSoundScript SoundManager;
 
         public static GameManager Game;
+        [SerializeField] private NetworkGameManager networkGame;
+        [SerializeField] private GameObject TeamSelect;
 
         private readonly float _yAxis = -0.9f;
-        private GameObject[,] _pieces;
+        protected GameObject[,] _pieces;
         private List<GameObject> _movedPawns;
         private Player _white;
         private Player _black;
@@ -255,7 +257,7 @@ namespace Assets.Scripts
             Board.MovePiece(piece, gridPoint);
         }
 
-        private void PawnMoved(GameObject pawn)
+        protected void PawnMoved(GameObject pawn)
         {
             _movedPawns.Add(pawn);
         }
@@ -310,7 +312,7 @@ namespace Assets.Scripts
             return null;
         }
 
-        private Vector2Int GridForPiece(GameObject pieceGameObject)
+        protected Vector2Int GridForPiece(GameObject pieceGameObject)
         {
             for (var i = 0; i < 8; i++)
             {
@@ -326,7 +328,7 @@ namespace Assets.Scripts
             return new Vector2Int(-1, -1);
         }
 
-        private Vector2Int PointForPiece(GameObject pieceGameObject)
+        protected Vector2Int PointForPiece(GameObject pieceGameObject)
         {
             for (var i = 0; i < 8; i++)
             {
@@ -354,11 +356,36 @@ namespace Assets.Scripts
             return !_otherPlayer.Pieces.Contains(piece);
         }
 
-        public void NextPlayer()
+        public virtual void NextPlayer()
         {
             var temp = CurrentPlayer;
             CurrentPlayer = _otherPlayer;
             _otherPlayer = temp;
+            var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            mainCamera.transform.Rotate(Vector3.back, 180f);
+        }
+
+        public void SetCurrentPlayer(bool isWhite)
+        {
+            if (isWhite)
+            {
+                CurrentPlayer = _white;
+                _otherPlayer = _black;
+            }
+            else
+            {
+                CurrentPlayer = _black;
+                _otherPlayer = _white;
+                var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+                mainCamera.transform.Rotate(Vector3.back, 180f);
+            }
+        }
+
+        public void SetUpOnlineGame()
+        {
+            TeamSelect.SetActive(true);
+            networkGame.gameObject.SetActive(true);
+            gameObject.SetActive(false);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using static Assets.Scripts.GameManager;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
@@ -45,6 +46,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.LoadLevel("GameView");
         }
-        
+        StartCoroutine("SetUpOnlineScene");
+    }
+
+    private IEnumerator SetUpOnlineScene()
+    {
+        yield return new WaitForSeconds(1f);
+        Game.SetUpOnlineGame();
     }
 }
