@@ -3,22 +3,35 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
+    public enum PlayerType
+    {
+        White,
+        Black
+    }
+
     public class Player
     {
         public List<GameObject> Pieces;
-        public List<GameObject> CapturedPieces;
 
         public string Name { get; }
         public readonly int Forward;
+        public readonly PlayerType PlayerType;
 
-        public Player(string name, bool positiveZMovement)
+        public Player(string name, PlayerType playerType)
         {
             Name = name;
             Pieces = new List<GameObject>();
-            CapturedPieces = new List<GameObject>();
 
-            if (positiveZMovement) Forward = 10;
-            else Forward = -10;
+            if (playerType.Equals(PlayerType.White))
+            {
+                Forward = 10;
+                PlayerType = PlayerType.White;
+            }
+            else
+            {
+                Forward = -10;
+                PlayerType = PlayerType.Black;
+            }
         }
     }
 }

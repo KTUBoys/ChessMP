@@ -27,6 +27,10 @@ namespace Assets.Scripts
         public Player CurrentPlayer;
         private Player _otherPlayer;
 
+        // UI
+        public CapturedPiecesUI CPUI_Black;
+        public CapturedPiecesUI CPUI_White;
+
         private void Awake()
         {
             SoundManager = GameObject.FindGameObjectWithTag("SoundManager").GetComponent<MovementSoundScript>();
@@ -38,8 +42,8 @@ namespace Assets.Scripts
             _pieces = new GameObject[8, 8];
             _movedPawns = new List<GameObject>();
 
-            _white = new Player("white", true);
-            _black = new Player("black", false);
+            _white = new Player("white", PlayerType.White);
+            _black = new Player("black", PlayerType.Black);
 
             CurrentPlayer = _white;
             _otherPlayer = _black;
@@ -268,6 +272,14 @@ namespace Assets.Scripts
         internal void CapturePieceAt(Vector2Int gridPoint)
         {
             var capturePiece = PieceAtGrid(gridPoint);
+
+            // --- Captured pieces UI update
+            if (CurrentPlayer.PlayerType.Equals(PlayerType.White))
+                CPUI_White.OnPieceCapture(PlayerType.White, capturePiece.GetComponent<Piece>().Type);
+            else
+                CPUI_Black.OnPieceCapture(PlayerType.Black, capturePiece.GetComponent<Piece>().Type);
+            // ---
+
             if (capturePiece.GetComponent<Piece>().Type == PieceType.King)
             {
                 Debug.Log(CurrentPlayer.Name + " winner!");

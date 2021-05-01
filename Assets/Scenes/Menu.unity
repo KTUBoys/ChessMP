@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: c04d04c21cc179d49851cb30c370440e,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3182,7 +3182,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -45.970093, y: -49.691513}
+  m_AnchoredPosition: {x: -45.970215, y: -49.691513}
   m_SizeDelta: {x: 91.93994, y: 99.383026}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &612199172
@@ -3649,7 +3649,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.099548794, y: 0.5}
   m_AnchorMax: {x: 0.38170728, y: 0.5}
-  m_AnchoredPosition: {x: -2.2301025, y: 0.000005722046}
+  m_AnchoredPosition: {x: -2.2299805, y: 0.000005722046}
   m_SizeDelta: {x: -3.1641235, y: 66.977066}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &807678296
@@ -4654,7 +4654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sliderPercentageText: {fileID: 499122366}
-  Tag: Sounds
+  tagsList: []
 --- !u!114 &982386745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6738,7 +6738,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.57500005, y: 0.5}
   m_AnchorMax: {x: 0.9056771, y: 0.5}
-  m_AnchoredPosition: {x: 1.4400024, y: 0.00046539}
+  m_AnchoredPosition: {x: 1.4400635, y: 0.00046539}
   m_SizeDelta: {x: -1.2258301, y: 34.48767}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1532322615
@@ -6815,7 +6815,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sliderPercentageText: {fileID: 554366872}
-  Tag: Sounds
+  tagsList:
+  - Sounds
 --- !u!1 &1544359715
 GameObject:
   m_ObjectHideFlags: 0
@@ -8791,7 +8792,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.0887744, y: 0.5}
   m_AnchorMax: {x: 0.3875793, y: 0.5}
-  m_AnchoredPosition: {x: 0.76989746, y: 0.000005722}
+  m_AnchoredPosition: {x: 0.77001953, y: 0.000005722}
   m_SizeDelta: {x: -0.55804443, y: 67.11835}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1934223064

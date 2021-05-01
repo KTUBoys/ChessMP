@@ -5,12 +5,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using AudioSource = UnityEngine.AudioSource;
+using GameObject = UnityEngine.GameObject;
 
 public class AudioSliderControl : MonoBehaviour
 {
     private Slider slider;
     public TextMeshProUGUI sliderPercentageText;
-    public string Tag;
+    public List<string> tagsList;
     private List<AudioSource> audioSources;
 
     void Start()
@@ -29,10 +30,27 @@ public class AudioSliderControl : MonoBehaviour
 
     private void SetAudioSourcesVolume(float value)
     {
-        audioSources = GameObject.FindGameObjectWithTag(Tag).GetComponents<AudioSource>().ToList();
-        foreach (var audioSource in audioSources)
+        if (tagsList.Any())
         {
-            audioSource.volume = value;
+            try
+            {
+                foreach (var tag in tagsList)
+                {
+                    audioSources = GameObject.FindGameObjectWithTag(tag).GetComponents<AudioSource>().ToList();
+                    audioSources.ForEach(x => x.volume = value);
+                }
+            }
+            catch (NullReferenceException e)
+            {
+                Debug.Log($"{e.InnerException}: A non-existing tag contains the tag list!");
+                throw;
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e);
+                throw;
+            }
         }
     }
 }
+
