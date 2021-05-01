@@ -49,7 +49,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         StartCoroutine("SetUpOnlineScene");
     }
 
-    private IEnumerator SetUpOnlineScene()
+    private IEnumerator SetUpOnlineScene() //should be a callback when scene is loaded
     {
         yield return new WaitForSeconds(1f);
         Game.SetUpOnlineGame();
