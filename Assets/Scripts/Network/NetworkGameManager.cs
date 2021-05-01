@@ -11,7 +11,6 @@ public class NetworkGameManager : GameManager
     private PhotonView PhotonView;
     private Player tempCurrentPlayer;
     private Player tempOtherPlayer;
-    private bool canMove;
 
     private void Awake()
     {
@@ -28,8 +27,15 @@ public class NetworkGameManager : GameManager
     [PunRPC]
     private void RPC_Move(Vector2 selectedPiece, Vector2 gridPoint)
     {
+        canMove = !canMove;
+
         Vector2Int gridPointInteger = new Vector2Int(Mathf.RoundToInt(gridPoint.x), Mathf.RoundToInt(gridPoint.y));
         GameObject piece = PieceAtGrid(new Vector2Int(Mathf.RoundToInt(selectedPiece.x), Mathf.RoundToInt(selectedPiece.y)));
+
+        if (Game.PieceAtGrid(gridPointInteger) != null)
+        {
+            CapturePieceAt(gridPointInteger);
+        }
 
         var pieceComponent = piece.GetComponent<Piece>();
         if (pieceComponent.Type == PieceType.Pawn && !HasPawnMoved(piece))

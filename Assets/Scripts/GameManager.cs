@@ -8,6 +8,12 @@ namespace Assets.Scripts
 {
     public class GameManager : MonoBehaviour
     {
+        /*<Network variables> These are implemented here so that Networked games and local games would work on the same scene */
+        [SerializeField] private NetworkGameManager networkGame;
+        [SerializeField] private GameObject TeamSelect;
+        protected bool canMove = false;
+        /*</Network variables>*/
+
         public ChessBoard Board;
         public GameObject PawnPiece;
         public GameObject RookPiece;
@@ -18,8 +24,6 @@ namespace Assets.Scripts
         public MovementSoundScript SoundManager;
 
         public static GameManager Game;
-        [SerializeField] private NetworkGameManager networkGame;
-        [SerializeField] private GameObject TeamSelect;
 
         private readonly float _yAxis = -0.9f;
         protected GameObject[,] _pieces;
@@ -44,6 +48,7 @@ namespace Assets.Scripts
             _black = new Player("black", false);
 
             CurrentPlayer = _white;
+            canMove = true;
             _otherPlayer = _black;
 
             InitialSetup();
@@ -244,6 +249,11 @@ namespace Assets.Scripts
 
         internal virtual void Move(GameObject piece, Vector2Int gridPoint)
         {
+            if(Game.PieceAtGrid(gridPoint) != null)
+            {
+                CapturePieceAt(gridPoint);
+            }
+
             var pieceComponent = piece.GetComponent<Piece>();
             if (pieceComponent.Type == PieceType.Pawn && !HasPawnMoved(piece))
             {
@@ -290,7 +300,7 @@ namespace Assets.Scripts
 
         internal bool IsCurrentPlayerPiece(GameObject piece)
         {
-            return CurrentPlayer.Pieces.Contains(piece);
+            return CurrentPlayer.Pieces.Contains(piece) && canMove;
         }
 
         internal GameObject PieceAtGrid(Vector2Int gridPoint)
@@ -365,15 +375,19 @@ namespace Assets.Scripts
             mainCamera.transform.Rotate(Vector3.back, 180f);
         }
 
+        /*Methods used in networked games. Ideally they could be replaced by the methods used in local games,
+          but because of the local game structure these are needed */
         public void SetCurrentPlayer(bool isWhite)
         {
             if (isWhite)
             {
                 CurrentPlayer = _white;
                 _otherPlayer = _black;
+                canMove = true;
             }
             else
             {
+                canMove = false;
                 CurrentPlayer = _black;
                 _otherPlayer = _white;
                 var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");

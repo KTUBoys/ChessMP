@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using static Assets.Scripts.GameManager;
+using UnityEngine.SceneManagement;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
@@ -20,6 +21,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     public void OnPlayOnlineClick()
     {
+        SceneManager.sceneLoaded += SceneLoaded;
         ConnectToServer();
     }
     private void ConnectToServer()
@@ -46,12 +48,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.LoadLevel("GameView");
         }
-        StartCoroutine("SetUpOnlineScene");
     }
 
-    private IEnumerator SetUpOnlineScene() //should be a callback when scene is loaded
+    //Scene loaded
+    public void SceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        yield return new WaitForSeconds(1f);
-        Game.SetUpOnlineGame();
+        if(scene.name == "GameView")
+        {
+            Game.SetUpOnlineGame();
+        }
+        SceneManager.sceneLoaded -= SceneLoaded;
     }
 }

@@ -45,15 +45,7 @@ namespace Assets.Scripts
                         return;
                     }
                     
-                    if (Game.PieceAtGrid(gridPoint) == null)
-                    {
-                        Game.Move(_movingPiece, gridPoint);
-                    }
-                    else
-                    {
-                        Game.CapturePieceAt(gridPoint);
-                        Game.Move(_movingPiece, gridPoint);
-                    }
+                    Game.Move(_movingPiece, gridPoint);
                     Game.SoundManager.MoveAPiece();
                     ExitState();
                 }
