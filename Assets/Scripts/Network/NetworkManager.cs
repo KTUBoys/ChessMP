@@ -40,6 +40,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         PhotonNetwork.CreateRoom(null);
+        Debug.LogError("Joining room failed! Creating a new one");
     }
 
     public override void OnJoinedRoom()
