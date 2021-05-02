@@ -45,6 +45,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        Debug.LogError("Joined room in region: " + PhotonNetwork.CloudRegion);
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LoadLevel("GameView");

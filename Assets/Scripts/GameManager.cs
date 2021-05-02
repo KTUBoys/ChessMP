@@ -11,7 +11,7 @@ namespace Assets.Scripts
         /*<Network variables> These are implemented here so that Networked games and local games would work on the same scene */
         [SerializeField] private NetworkGameManager networkGame;
         [SerializeField] private GameObject TeamSelect;
-        protected bool canMove = false;
+        protected bool canMove = true;
         /*</Network variables>*/
 
         public ChessBoard Board;
@@ -39,7 +39,7 @@ namespace Assets.Scripts
             Game = this;
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             _pieces = new GameObject[8, 8];
             _movedPawns = new List<GameObject>();
@@ -48,7 +48,6 @@ namespace Assets.Scripts
             _black = new Player("black", false);
 
             CurrentPlayer = _white;
-            canMove = true;
             _otherPlayer = _black;
 
             InitialSetup();

@@ -18,6 +18,12 @@ public class NetworkGameManager : GameManager
         Game = this;
     }
 
+    protected override void Start()
+    {
+        base.Start();
+        canMove = false;
+    }
+
     internal override void Move(GameObject piece, Vector2Int gridPoint)
     {
         Vector2 selectedPiece = GridForPiece(piece);
