@@ -8,6 +8,12 @@ namespace Assets.Scripts
 {
     public class GameManager : MonoBehaviour
     {
+        /*<Network variables> These are implemented here so that Networked games and local games would work on the same scene */
+        [SerializeField] private NetworkGameManager networkGame;
+        [SerializeField] private GameObject TeamSelect;
+        protected bool canMove = true;
+        /*</Network variables>*/
+
         public ChessBoard Board;
         public GameObject PawnPiece;
         public GameObject RookPiece;
@@ -20,7 +26,7 @@ namespace Assets.Scripts
         public static GameManager Game;
 
         private readonly float _yAxis = -0.9f;
-        private GameObject[,] _pieces;
+        protected GameObject[,] _pieces;
         private List<GameObject> _movedPawns;
         private Player _white;
         private Player _black;
@@ -33,7 +39,7 @@ namespace Assets.Scripts
             Game = this;
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             _pieces = new GameObject[8, 8];
             _movedPawns = new List<GameObject>();
@@ -240,8 +246,13 @@ namespace Assets.Scripts
             return locations;
         }
 
-        internal void Move(GameObject piece, Vector2Int gridPoint)
+        internal virtual void Move(GameObject piece, Vector2Int gridPoint)
         {
+            if(Game.PieceAtGrid(gridPoint) != null)
+            {
+                CapturePieceAt(gridPoint);
+            }
+
             var pieceComponent = piece.GetComponent<Piece>();
             if (pieceComponent.Type == PieceType.Pawn && !HasPawnMoved(piece))
             {
@@ -255,7 +266,7 @@ namespace Assets.Scripts
             Board.MovePiece(piece, gridPoint);
         }
 
-        private void PawnMoved(GameObject pawn)
+        protected void PawnMoved(GameObject pawn)
         {
             _movedPawns.Add(pawn);
         }
@@ -288,7 +299,7 @@ namespace Assets.Scripts
 
         internal bool IsCurrentPlayerPiece(GameObject piece)
         {
-            return CurrentPlayer.Pieces.Contains(piece);
+            return CurrentPlayer.Pieces.Contains(piece) && canMove;
         }
 
         internal GameObject PieceAtGrid(Vector2Int gridPoint)
@@ -310,7 +321,7 @@ namespace Assets.Scripts
             return null;
         }
 
-        private Vector2Int GridForPiece(GameObject pieceGameObject)
+        protected Vector2Int GridForPiece(GameObject pieceGameObject)
         {
             for (var i = 0; i < 8; i++)
             {
@@ -326,7 +337,7 @@ namespace Assets.Scripts
             return new Vector2Int(-1, -1);
         }
 
-        private Vector2Int PointForPiece(GameObject pieceGameObject)
+        protected Vector2Int PointForPiece(GameObject pieceGameObject)
         {
             for (var i = 0; i < 8; i++)
             {
@@ -354,11 +365,40 @@ namespace Assets.Scripts
             return !_otherPlayer.Pieces.Contains(piece);
         }
 
-        public void NextPlayer()
+        public virtual void NextPlayer()
         {
             var temp = CurrentPlayer;
             CurrentPlayer = _otherPlayer;
             _otherPlayer = temp;
+            var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            mainCamera.transform.Rotate(Vector3.back, 180f);
+        }
+
+        /*Methods used in networked games. Ideally they could be replaced by the methods used in local games,
+          but because of the local game structure these are needed */
+        public void SetCurrentPlayer(bool isWhite)
+        {
+            if (isWhite)
+            {
+                CurrentPlayer = _white;
+                _otherPlayer = _black;
+                canMove = true;
+            }
+            else
+            {
+                canMove = false;
+                CurrentPlayer = _black;
+                _otherPlayer = _white;
+                var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+                mainCamera.transform.Rotate(Vector3.back, 180f);
+            }
+        }
+
+        public void SetUpOnlineGame()
+        {
+            TeamSelect.SetActive(true);
+            networkGame.gameObject.SetActive(true);
+            gameObject.SetActive(false);
         }
     }
 }
