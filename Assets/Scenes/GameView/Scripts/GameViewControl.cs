@@ -1,21 +1,23 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameViewControl : MonoBehaviour
+namespace Assets.Scenes.GameView.Scripts
 {
-    // Start is called before the first frame update
-    void Start()
+    public class GameViewControl : MonoBehaviour
     {
-    
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        // Start is called before the first frame update
+        void Start()
         {
-            SceneManager.LoadSceneAsync("Scenes/Menu");
-            Debug.Log("Pressed escape: back to Menu scene");
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                SceneManager.LoadSceneAsync("Scenes/Menu");
+                Debug.Log("Pressed escape: back to Menu scene");
+            }
         }
     }
 }
