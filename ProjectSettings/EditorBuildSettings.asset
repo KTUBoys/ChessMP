@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameView.unity
     guid: 4b7a380fdeb58a048b4f5ef4e7b7194b
+  - enabled: 0
+    path: Assets/Scenes/GameViewOnline.unity
+    guid: f30dbf163e966e04fb979c5fd766d5a7
   m_configObjects: {}

@@ -46,15 +46,7 @@ namespace Assets.Scripts
                         return;
                     }
                     
-                    if (Game.PieceAtGrid(gridPoint) == null)
-                    {
-                        Game.Move(_movingPiece, gridPoint);
-                    }
-                    else
-                    {
-                        Game.CapturePieceAt(gridPoint);
-                        Game.Move(_movingPiece, gridPoint);
-                    }
+                    Game.Move(_movingPiece, gridPoint);
                     Game.SoundManager.MoveAPiece();
                     ExitState();
                 }
@@ -110,8 +102,6 @@ namespace Assets.Scripts
         private void ExitState()
         {
             this.enabled = false;
-            var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-            mainCamera.transform.Rotate(Vector3.back, 180f);
             var selector = GetComponent<TileSelector>();
             _tileHighlight.SetActive(false);
             Game.DeselectPiece(_movingPiece);
