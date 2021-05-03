@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using static Assets.Scripts.GameManager;
 using UnityEngine.SceneManagement;
+using Photon.Realtime;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
@@ -39,7 +40,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        PhotonNetwork.CreateRoom(null);
+        RoomOptions roomOptions = new RoomOptions();
+        roomOptions.MaxPlayers = 2;
+        PhotonNetwork.CreateRoom(null, roomOptions);
         Debug.LogError("Joining room failed! Creating a new one");
     }
 
