@@ -92,9 +92,23 @@ public class SelectPreferredColor : MonoBehaviour
         //Assign random since selections match
         else
         {
-            Game.SetCurrentPlayer(Random.Range(0, 2) == 0);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                bool isWhite = Random.Range(0, 2) == 0;
+                Game.SetCurrentPlayer(isWhite);
+                PhotonView.RPC(nameof(RPC_AssignRandomColor), RpcTarget.AllBuffered, new object[] { !isWhite });
+            }
         }
 
         gameObject.SetActive(false);
+    }
+
+    [PunRPC]
+    private void RPC_AssignRandomColor(bool isWhite)
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            Game.SetCurrentPlayer(isWhite);
+        }
     }
 }
