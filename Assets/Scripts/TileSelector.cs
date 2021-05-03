@@ -12,7 +12,7 @@ namespace Assets.Scripts
         void Start()
         {
             var point = PointFromGrid(new Vector2Int(0, 0));
-            _tileHighlight = Instantiate(TileHighlightPrefab, point, Quaternion.identity, gameObject.transform);
+            _tileHighlight = Instantiate(TileHighlightPrefab, point, Quaternion.Euler(-90f, 0f, 0f), gameObject.transform);
             _tileHighlight.SetActive(false);
         }
 

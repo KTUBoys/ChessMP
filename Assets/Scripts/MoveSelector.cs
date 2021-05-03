@@ -20,7 +20,7 @@ namespace Assets.Scripts
         {
             enabled = false;
             _tileHighlight = Instantiate(TileHighlightPrefab, ChessBoard.PointFromGrid(new Vector2Int(0, 0)),
-                Quaternion.identity, gameObject.transform);
+                Quaternion.Euler(-90f, 0f, 0f), gameObject.transform);
             _tileHighlight.SetActive(false);
         }
 
@@ -34,7 +34,8 @@ namespace Assets.Scripts
                 var gridPoint = ChessBoard.GridFromPoint(point);
 
                 _tileHighlight.SetActive(true);
-                _tileHighlight.transform.position = ChessBoard.PointFromGrid(gridPoint);
+                var xz = ChessBoard.PointFromGrid(gridPoint);
+                _tileHighlight.transform.position = new Vector3(xz.x, 0f, xz.z);
                 var gp = new Vector2Int((int) ChessBoard.PointFromGrid(gridPoint).x,
                     (int) ChessBoard.PointFromGrid(gridPoint).z);
                 if (Input.GetMouseButtonDown(0))
@@ -88,11 +89,11 @@ namespace Assets.Scripts
                 GameObject highlight;
                 if (Game.PieceAtGrid(loc))
                 {
-                    highlight = Instantiate(AttackLocationPrefab, ChessBoard.PointFromGrid(loc), Quaternion.identity, gameObject.transform);
+                    highlight = Instantiate(AttackLocationPrefab, ChessBoard.PointFromGrid(loc), Quaternion.Euler(-90f, 0f, 0f), gameObject.transform);
                 }
                 else
                 {
-                    highlight = Instantiate(MoveLocationPrefab, ChessBoard.PointFromGrid(loc), Quaternion.identity, gameObject.transform);
+                    highlight = Instantiate(MoveLocationPrefab, ChessBoard.PointFromGrid(loc), Quaternion.Euler(-90f, 0f, 0f), gameObject.transform);
                 }
                 _locationHighlights.Add(highlight);
             }
