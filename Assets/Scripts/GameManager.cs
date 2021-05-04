@@ -30,6 +30,7 @@ namespace Assets.Scripts
         // UI
         public CapturedPiecesUI CPUI_Black;
         public CapturedPiecesUI CPUI_White;
+        public MovementHistoryUI MovementHistoryUI;
 
         private void Awake()
         {
@@ -256,6 +257,7 @@ namespace Assets.Scripts
             var startGridPoint = PointForPiece(piece);
             _pieces[startGridPoint.y, startGridPoint.x] = null;
             _pieces[gp.y, gp.x] = piece;
+            MovementHistoryUI.OnPieceMoved(CurrentPlayer, piece, startGridPoint, gp); // Updates the movement history panel
             Board.MovePiece(piece, gridPoint);
         }
 

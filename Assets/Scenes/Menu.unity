@@ -1509,9 +1509,8 @@ GameObject:
   m_Component:
   - component: {fileID: 250840944}
   - component: {fileID: 250840945}
-  - component: {fileID: 250840946}
-  - component: {fileID: 250840947}
   - component: {fileID: 250840948}
+  - component: {fileID: 250840949}
   m_Layer: 5
   m_Name: SettingsMenu
   m_TagString: Untagged
@@ -1553,33 +1552,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FirstSelectedButton: {fileID: 1653021285}
---- !u!114 &250840946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 250840943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d137423c7fc02834098f3733e6e18354, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropdown: {fileID: 480888665}
---- !u!114 &250840947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 250840943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a328a5a32063d5f44ae2f8708f363eea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropdown: {fileID: 1615414131}
-  fullscreenToggle: {fileID: 1852883776}
 --- !u!114 &250840948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1593,6 +1565,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popup: {fileID: 1386351449}
+--- !u!114 &250840949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250840943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 820af7eb245ce754b9e2046e0048e086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resolutionDropdown: {fileID: 1615414131}
+  fullscreenToggle: {fileID: 1852883776}
+  qualityDropdown: {fileID: 480888665}
+  backgroundMusicSlider: {fileID: 982386745}
+  soundsSlider: {fileID: 1532322615}
+  backgroundMusicSliderPercentageText: {fileID: 499122366}
+  soundsSliderPercentageText: {fileID: 554366872}
+  backgroundMusicTagsList: []
+  soundsTagsList:
+  - Sounds
 --- !u!1 &260869812
 GameObject:
   m_ObjectHideFlags: 0
@@ -2596,7 +2590,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 250840946}
+      - m_Target: {fileID: 250840949}
         m_MethodName: OnQualityChanged
         m_Mode: 0
         m_Arguments:
@@ -4611,7 +4605,6 @@ GameObject:
   m_Component:
   - component: {fileID: 982386743}
   - component: {fileID: 982386745}
-  - component: {fileID: 982386744}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -4641,20 +4634,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.39001465, y: -0.3520012}
   m_SizeDelta: {x: -0.22589111, y: 34.48767}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &982386744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 982386742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47d1032f61130954db99f1c5cafbcfa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sliderPercentageText: {fileID: 499122366}
-  tagsList: []
 --- !u!114 &982386745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6711,7 +6690,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1532322614}
   - component: {fileID: 1532322615}
-  - component: {fileID: 1532322616}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -6802,21 +6780,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1532322616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1532322613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47d1032f61130954db99f1c5cafbcfa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sliderPercentageText: {fileID: 554366872}
-  tagsList:
-  - Sounds
 --- !u!1 &1544359715
 GameObject:
   m_ObjectHideFlags: 0
@@ -7190,7 +7153,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 250840947}
+      - m_Target: {fileID: 250840949}
         m_MethodName: OnResolutionChanged
         m_Mode: 0
         m_Arguments:
@@ -8524,7 +8487,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 250840947}
+      - m_Target: {fileID: 250840949}
         m_MethodName: OnFullscreenModeChanged
         m_Mode: 1
         m_Arguments:

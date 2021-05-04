@@ -10,6 +10,8 @@ public class CapturedPiecesUI : MonoBehaviour
     public Transform ContentContainer;
     public List<GameObject> CapturedPiecesPanels;
 
+    public ScrollRect ScrollRect;
+
     public void OnPieceCapture(PlayerType color, PieceType pieceType)
     {
         var newPanel = Instantiate(PanelPrefab);
@@ -25,6 +27,8 @@ public class CapturedPiecesUI : MonoBehaviour
         // Assigns piece and an opposite color for it
         pieceText.text = AssignPiece(pieceType);
         pieceText.color = (pieceColor.color.Equals(Color.white)) ? (Color.black) : (Color.white);
+
+        ScrollTo(newPanel.GetComponent<RectTransform>());
     }
 
     private string AssignPiece(PieceType pieceType)
@@ -59,5 +63,16 @@ public class CapturedPiecesUI : MonoBehaviour
         }
 
         return piece;
+    }
+
+    private void ScrollTo(RectTransform target)
+    {
+        Canvas.ForceUpdateCanvases();
+
+        RectTransform contentContainer = ContentContainer.GetComponent<RectTransform>();
+
+        contentContainer.anchoredPosition =
+            (Vector2)ScrollRect.transform.InverseTransformPoint(contentContainer.position)
+            - (Vector2)ScrollRect.transform.InverseTransformPoint(target.position);
     }
 }
