@@ -10,10 +10,12 @@ namespace Assets.Scripts
 
         public string Name { get; }
         public readonly int Forward;
+        public readonly bool White;
 
-        public Player(string name, bool positiveZMovement)
+        public Player(string name, bool positiveZMovement, bool white)
         {
             Name = name;
+            White = white;
             Pieces = new List<GameObject>();
             CapturedPieces = new List<GameObject>();
 
