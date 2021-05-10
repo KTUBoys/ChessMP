@@ -9,6 +9,9 @@ TagManager:
   - PieceTakeSound
   - PieceMoveSound
   - Sounds
+  - Bullet
+  - WhiteCamera
+  - BlackCamera
   layers:
   - Default
   - TransparentFX

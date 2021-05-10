@@ -22,11 +22,13 @@ namespace Assets.Scripts
         public GameObject BishopPiece;
         public GameObject KnightPiece;
         public MovementSoundScript SoundManager;
+        private Camera WhiteCamera;
+        private Camera BlackCamera;
 
         public static GameManager Game;
 
-        private readonly float _yAxis = -0.9f;
-        protected GameObject[,] _pieces;
+        private const float YAxis = -0.9f;
+        protected GameObject[,] Pieces;
         private List<GameObject> _movedPawns;
         private Player _white;
         private Player _black;
@@ -46,7 +48,12 @@ namespace Assets.Scripts
 
         protected virtual void Start()
         {
-            _pieces = new GameObject[8, 8];
+            WhiteCamera = Camera.allCameras[1];
+            BlackCamera = Camera.allCameras[2];
+
+            WhiteCamera.enabled = true;
+            BlackCamera.enabled = false;
+            Pieces = new GameObject[8, 8];
             _movedPawns = new List<GameObject>();
 
             _white = new Player("white", PlayerType.White);
@@ -62,7 +69,7 @@ namespace Assets.Scripts
             Quaternion[] pieceAngles =
             {
                 Quaternion.Euler(-90, 180, 0), // [0] - WHITE,
-                Quaternion.Euler(-90, -180, 0) // [1] - BLACK
+                Quaternion.Euler(-90, 0, 0) // [1] - BLACK
             };
             int[] xPoints =
             {
@@ -108,23 +115,20 @@ namespace Assets.Scripts
         private void SpawnPaws(float x, float z, Quaternion quaternion, int color)
         {
             PawnPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
-            var index = 8;
             var c = "Black";
             if (color == 1)
             {
                 c = "White";
-                index = 48;
             }
 
             for (var i = 0; i < 8; i++)
             {
                 var pawnName = $"{c} Pawn {i + 1}";
-                var pawn = Instantiate(PawnPiece, new Vector3(x, _yAxis, z), quaternion);
+                var pawn = Instantiate(PawnPiece, new Vector3(x, YAxis, z), quaternion);
                 pawn.AddComponent<BoxCollider>();
                 var piece = pawn.AddComponent<Pawn>();
                 piece.Type = PieceType.Pawn;
                 pawn.name = pawnName;
-                index++;
                 x += 10;
 
                 if (color == 1)
@@ -143,7 +147,7 @@ namespace Assets.Scripts
             RookPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
             for (var i = 0; i < 2; i++)
             {
-                var rook = Instantiate(RookPiece, new Vector3(x, _yAxis, z), quaternion);
+                var rook = Instantiate(RookPiece, new Vector3(x, YAxis, z), quaternion);
                 rook.AddComponent<BoxCollider>();
                 var piece = rook.AddComponent<Rook>();
                 piece.Type = PieceType.Rook;
@@ -164,7 +168,7 @@ namespace Assets.Scripts
             KnightPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
             for (var i = 0; i < 2; i++)
             {
-                var knight = Instantiate(KnightPiece, new Vector3(x, _yAxis, z), quaternion);
+                var knight = Instantiate(KnightPiece, new Vector3(x, YAxis, z), quaternion);
                 knight.AddComponent<BoxCollider>();
                 var piece = knight.AddComponent<Knight>();
                 piece.Type = PieceType.Knight;
@@ -185,7 +189,7 @@ namespace Assets.Scripts
             BishopPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
             for (var i = 0; i < 2; i++)
             {
-                var bishop = Instantiate(BishopPiece, new Vector3(x, _yAxis, z), quaternion);
+                var bishop = Instantiate(BishopPiece, new Vector3(x, YAxis, z), quaternion);
                 bishop.AddComponent<BoxCollider>();
                 var piece = bishop.AddComponent<Bishop>();
                 piece.Type = PieceType.Bishop;
@@ -204,7 +208,7 @@ namespace Assets.Scripts
         private void SpawnKing(float x, float z, Quaternion quaternion, int color)
         {
             KingPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
-            var king = Instantiate(KingPiece, new Vector3(x, _yAxis, z), quaternion);
+            var king = Instantiate(KingPiece, new Vector3(x, YAxis, z), quaternion);
             king.AddComponent<BoxCollider>();
             var piece = king.AddComponent<King>();
             piece.Type = PieceType.King;
@@ -221,7 +225,7 @@ namespace Assets.Scripts
         private void SpawnQueen(float x, float z, Quaternion quaternion, int color)
         {
             QueenPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
-            var queen = Instantiate(QueenPiece, new Vector3(x, _yAxis, z), quaternion);
+            var queen = Instantiate(QueenPiece, new Vector3(x, YAxis, z), quaternion);
             queen.AddComponent<BoxCollider>();
             var piece = queen.AddComponent<Queen>();
             piece.Type = PieceType.Queen;
@@ -238,7 +242,7 @@ namespace Assets.Scripts
         private void AddPiece(GameObject piece, Player player, int column, int row)
         {
             player.Pieces.Add(piece);
-            _pieces[column, row] = piece;
+            Pieces[column, row] = piece;
         }
 
         internal List<Vector2Int> LegalMoves(GameObject pieceGameObject)
@@ -327,7 +331,7 @@ namespace Assets.Scripts
                         var point = ChessBoard.GridPoints[i, j];
                         if (Math.Abs(gridPoint.x - point.x) < 4 && Math.Abs(gridPoint.y - point.y) < 4)
                         {
-                            return _pieces[j, i];
+                            return Pieces[j, i];
                         }
                     }
                 }
@@ -341,7 +345,7 @@ namespace Assets.Scripts
             {
                 for (var j = 0; j < 8; j++)
                 {
-                    if (_pieces[i, j] == pieceGameObject)
+                    if (Pieces[i, j] == pieceGameObject)
                     {
                         return ChessBoard.GridPoints[j, i];
                     }
@@ -357,7 +361,7 @@ namespace Assets.Scripts
             {
                 for (var j = 0; j < 8; j++)
                 {
-                    if (_pieces[i, j] == pieceGameObject)
+                    if (Pieces[i, j] == pieceGameObject)
                     {
                         return new Vector2Int(j, i);
                     }
@@ -381,30 +385,52 @@ namespace Assets.Scripts
 
         public virtual void NextPlayer()
         {
+            var mainCam = GameObject.FindGameObjectWithTag("MainCamera");
             var temp = CurrentPlayer;
             CurrentPlayer = _otherPlayer;
             _otherPlayer = temp;
-            var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-            mainCamera.transform.Rotate(Vector3.back, 180f);
+            if (BlackCamera.enabled == false)
+            {
+                SwitchToBlackCamera(mainCam);
+            }
+            else
+            {
+                SwitchToWhiteCamera(mainCam);
+            }
+        }
+
+        private void SwitchToBlackCamera(GameObject mainCam)
+        {
+            WhiteCamera.enabled = false;
+            BlackCamera.enabled = true;
+            mainCam.transform.SetPositionAndRotation(new Vector3(-40.1f, 61, -34.1f), Quaternion.Euler(90, 180, 0));
+        }
+
+        private void SwitchToWhiteCamera(GameObject mainCam)
+        {
+            BlackCamera.enabled = false;
+            WhiteCamera.enabled = true;
+            mainCam.transform.SetPositionAndRotation(new Vector3(-39.9f, 61, -34.1f), Quaternion.Euler(90, 0, 0));
         }
 
         /*Methods used in networked games. Ideally they could be replaced by the methods used in local games,
           but because of the local game structure these are needed */
         public void SetCurrentPlayer(bool isWhite)
         {
+            var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             if (isWhite)
             {
                 CurrentPlayer = _white;
                 _otherPlayer = _black;
                 canMove = true;
+                SwitchToWhiteCamera(mainCamera);
             }
             else
             {
                 canMove = false;
                 CurrentPlayer = _black;
                 _otherPlayer = _white;
-                var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-                mainCamera.transform.Rotate(Vector3.back, 180f);
+                SwitchToBlackCamera(mainCamera);
             }
         }
 

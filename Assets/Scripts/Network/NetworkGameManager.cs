@@ -51,8 +51,8 @@ public class NetworkGameManager : GameManager
 
         var gp = ChessBoard.PlaceFromGrid(gridPointInteger);
         var startGridPoint = PointForPiece(piece);
-        _pieces[startGridPoint.y, startGridPoint.x] = null;
-        _pieces[gp.y, gp.x] = piece;
+        Pieces[startGridPoint.y, startGridPoint.x] = null;
+        Pieces[gp.y, gp.x] = piece;
         Board.MovePiece(piece, gridPointInteger);
     }
 
