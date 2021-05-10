@@ -48,8 +48,8 @@ namespace Assets.Scripts
 
         protected virtual void Start()
         {
-            WhiteCamera = Camera.allCameras[1];
-            BlackCamera = Camera.allCameras[2];
+            WhiteCamera = GameObject.FindGameObjectWithTag("WhiteCamera").GetComponent<Camera>();
+            BlackCamera = GameObject.FindGameObjectWithTag("BlackCamera").GetComponent<Camera>();
 
             WhiteCamera.enabled = true;
             BlackCamera.enabled = false;
@@ -270,8 +270,8 @@ namespace Assets.Scripts
 
             var gp = ChessBoard.PlaceFromGrid(gridPoint);
             var startGridPoint = PointForPiece(piece);
-            _pieces[startGridPoint.y, startGridPoint.x] = null;
-            _pieces[gp.y, gp.x] = piece;
+            Pieces[startGridPoint.y, startGridPoint.x] = null;
+            Pieces[gp.y, gp.x] = piece;
             MovementHistoryUI.OnPieceMoved(CurrentPlayer, piece, startGridPoint, gp); // Updates the movement history panel
             Board.MovePiece(piece, gridPoint);
         }

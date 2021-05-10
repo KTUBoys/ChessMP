@@ -12,6 +12,7 @@ TagManager:
   - Bullet
   - WhiteCamera
   - BlackCamera
+  - BackgroundMusic
   layers:
   - Default
   - TransparentFX

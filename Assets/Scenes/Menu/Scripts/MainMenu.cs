@@ -8,8 +8,7 @@ namespace Assets.Scenes.Menu.Scripts
     {
         public void Play()
         {
-            //SceneManager.LoadSceneAsync("Scenes/GameView");
-            SceneManager.LoadSceneAsync("Scenes/GameView_CHES-76");
+            SceneManager.LoadSceneAsync("Scenes/GameView");
             Debug.Log("Switch scene to GameView");
         }
 

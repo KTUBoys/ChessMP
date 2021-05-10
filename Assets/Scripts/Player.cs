@@ -20,7 +20,6 @@ namespace Assets.Scripts
         public Player(string name, PlayerType playerType)
         {
             Name = name;
-            White = white;
             Pieces = new List<GameObject>();
 
             if (playerType.Equals(PlayerType.White))
