@@ -18,7 +18,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        UIManager.SetConnectionStatusText(PhotonNetwork.NetworkClientState.ToString());
+        UIManager?.SetConnectionStatusText(PhotonNetwork.NetworkClientState.ToString());
     }
     public void OnPlayOnlineClick()
     {
@@ -51,14 +51,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Debug.LogError("Joined room in region: " + PhotonNetwork.CloudRegion);
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("GameView");
+            PhotonNetwork.LoadLevel("GameView_MultiPlayer");
         }
     }
 
     //Scene loaded
     public void SceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if(scene.name == "GameView")
+        if(scene.name == "GameView_MultiPlayer")
         {
             Game.SetUpOnlineGame();
         }

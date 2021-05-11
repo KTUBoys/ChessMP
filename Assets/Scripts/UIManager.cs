@@ -15,8 +15,13 @@ public class UIManager : MonoBehaviour
         MenuScreen.SetActive(false);
         Logo.SetActive(false);
     }
+
     public void SetConnectionStatusText(string text)
     {
+        if (ConnectionStatusText is null) 
+        {
+            return;
+        }
         ConnectionStatusText.text = text;
     }
 }

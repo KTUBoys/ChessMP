@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 using static Assets.Scripts.GameManager;
@@ -101,6 +102,8 @@ public class SelectPreferredColor : MonoBehaviour
         }
 
         gameObject.SetActive(false);
+        var tileSelector = FindObjectOfType<TileSelector>();
+        tileSelector.enabled = true;
     }
 
     [PunRPC]
