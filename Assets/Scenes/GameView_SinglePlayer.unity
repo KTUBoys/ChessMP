@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1661,9 +1661,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1745846794}
+      - m_Target: {fileID: 573339907}
         m_MethodName: OnQualityChanged
-        m_Mode: 0
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1915,7 +1915,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1745846794}
+      - m_Target: {fileID: 573339907}
         m_MethodName: OnFullscreenModeChanged
         m_Mode: 1
         m_Arguments:
@@ -2493,8 +2493,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Play
+      - m_Target: {fileID: 573339907}
+        m_MethodName: Sounds_SliderValueChanged
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2504,6 +2504,61 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &573339906
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 573339908}
+  - component: {fileID: 573339907}
+  m_Layer: 0
+  m_Name: SettingsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &573339907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573339906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 820af7eb245ce754b9e2046e0048e086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resolutionDropdown: {fileID: 1385778075}
+  fullscreenToggle: {fileID: 469616115}
+  qualityDropdown: {fileID: 428473663}
+  backgroundMusicSlider: {fileID: 879511913}
+  soundsSlider: {fileID: 567267403}
+  backgroundMusicSliderPercentageText: {fileID: 2032241549}
+  soundsSliderPercentageText: {fileID: 1974666676}
+  backgroundMusicTagsList:
+  - BackgroundMusic
+  soundsTagsList:
+  - PieceMoveSound
+  - PieceTakeSound
+--- !u!4 &573339908
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573339906}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &598816257
 GameObject:
   m_ObjectHideFlags: 0
@@ -4495,7 +4550,18 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 573339907}
+        m_MethodName: BGMusic_SliderValueChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &880860448
 GameObject:
   m_ObjectHideFlags: 0
@@ -12494,9 +12560,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1745846794}
+      - m_Target: {fileID: 573339907}
         m_MethodName: OnResolutionChanged
-        m_Mode: 0
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -14169,7 +14235,6 @@ GameObject:
   - component: {fileID: 1745846792}
   - component: {fileID: 1745846796}
   - component: {fileID: 1745846793}
-  - component: {fileID: 1745846794}
   m_Layer: 5
   m_Name: SettingsMenu
   m_TagString: Untagged
@@ -14211,30 +14276,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popup: {fileID: 1676402760}
---- !u!114 &1745846794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745846791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 820af7eb245ce754b9e2046e0048e086, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resolutionDropdown: {fileID: 1385778075}
-  fullscreenToggle: {fileID: 469616115}
-  qualityDropdown: {fileID: 428473663}
-  backgroundMusicSlider: {fileID: 879511913}
-  soundsSlider: {fileID: 567267403}
-  backgroundMusicSliderPercentageText: {fileID: 2032241549}
-  soundsSliderPercentageText: {fileID: 1974666676}
-  backgroundMusicTagsList:
-  - BackgroundMusic
-  soundsTagsList:
-  - PieceMoveSound
-  - PieceTakeSound
 --- !u!114 &1745846796
 MonoBehaviour:
   m_ObjectHideFlags: 0

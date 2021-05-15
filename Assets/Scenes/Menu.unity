@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: c04d04c21cc179d49851cb30c370440e,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1637,7 +1637,6 @@ GameObject:
   - component: {fileID: 250840944}
   - component: {fileID: 250840945}
   - component: {fileID: 250840948}
-  - component: {fileID: 250840949}
   m_Layer: 5
   m_Name: SettingsMenu
   m_TagString: Untagged
@@ -1692,29 +1691,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popup: {fileID: 1386351449}
---- !u!114 &250840949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 250840943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 820af7eb245ce754b9e2046e0048e086, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resolutionDropdown: {fileID: 1615414131}
-  fullscreenToggle: {fileID: 1852883776}
-  qualityDropdown: {fileID: 480888665}
-  backgroundMusicSlider: {fileID: 982386745}
-  soundsSlider: {fileID: 1532322615}
-  backgroundMusicSliderPercentageText: {fileID: 499122366}
-  soundsSliderPercentageText: {fileID: 554366872}
-  backgroundMusicTagsList:
-  - BackgroundMusic
-  soundsTagsList:
-  - Sounds
 --- !u!1 &260869812
 GameObject:
   m_ObjectHideFlags: 0
@@ -2739,9 +2715,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 250840949}
+      - m_Target: {fileID: 833438178}
         m_MethodName: OnQualityChanged
-        m_Mode: 0
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3966,6 +3942,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 811859355}
   m_CullTransparentMesh: 0
+--- !u!1 &833438177
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 833438179}
+  - component: {fileID: 833438178}
+  m_Layer: 0
+  m_Name: SettingsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &833438178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833438177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 820af7eb245ce754b9e2046e0048e086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resolutionDropdown: {fileID: 1615414131}
+  fullscreenToggle: {fileID: 1852883776}
+  qualityDropdown: {fileID: 480888665}
+  backgroundMusicSlider: {fileID: 982386745}
+  soundsSlider: {fileID: 1532322615}
+  backgroundMusicSliderPercentageText: {fileID: 499122366}
+  soundsSliderPercentageText: {fileID: 554366872}
+  backgroundMusicTagsList:
+  - BackgroundMusic
+  soundsTagsList:
+  - Sounds
+--- !u!4 &833438179
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833438177}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &846665941
 GameObject:
   m_ObjectHideFlags: 0
@@ -4832,7 +4862,18 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 833438178}
+        m_MethodName: BGMusic_SliderValueChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1020790350
 GameObject:
   m_ObjectHideFlags: 0
@@ -7144,6 +7185,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 833438178}
+        m_MethodName: Sounds_SliderValueChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1544359715
 GameObject:
   m_ObjectHideFlags: 0
@@ -7517,9 +7569,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 250840949}
+      - m_Target: {fileID: 833438178}
         m_MethodName: OnResolutionChanged
-        m_Mode: 0
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8987,7 +9039,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 250840949}
+      - m_Target: {fileID: 833438178}
         m_MethodName: OnFullscreenModeChanged
         m_Mode: 1
         m_Arguments:
