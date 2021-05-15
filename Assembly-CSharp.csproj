@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{D427A1FF-4BAD-171A-26A5-9AF87340066B}</ProjectGuid>
+    <ProjectGuid>{59BE9901-10BF-1062-6FBB-73437DC5D01F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -99,6 +99,7 @@
     <Compile Include="Assets\Scripts\GameViewControl.cs" />
     <Compile Include="Assets\Scripts\MoveSelector.cs" />
     <Compile Include="Assets\Scripts\MovementSoundScript.cs" />
+    <Compile Include="Assets\Scripts\Network\MultiplayerExitControl.cs" />
     <Compile Include="Assets\Scripts\Network\NetworkGameManager.cs" />
     <Compile Include="Assets\Scripts\Network\NetworkManager.cs" />
     <Compile Include="Assets\Scripts\Network\SelectPreferredColor.cs" />
@@ -326,10 +327,10 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.21f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="Photon3Unity3D">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Assets/Photon/PhotonLibs/netstandard2.0/Photon3Unity3D.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Assets/Photon/PhotonLibs/netstandard2.0/Photon3Unity3D.dll</HintPath>
     </Reference>
     <Reference Include="websocket-sharp">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.21f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -677,114 +678,114 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.21f1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Toolchain.Win-x86_64-Linux-x86_64">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.Toolchain.Win-x86_64-Linux-x86_64.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.Toolchain.Win-x86_64-Linux-x86_64.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Shaders">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Editor">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Postprocessing.Editor">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Postprocessing.Runtime">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Sysroot.Linux_x86_64">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.Sysroot.Linux_x86_64.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.Sysroot.Linux_x86_64.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ShaderGraph.Editor">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.SysrootPackage.Editor">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.SysrootPackage.Editor.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.SysrootPackage.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>C:/Users/Vincentas/Desktop/ThisShouldWork/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>C:/Users/domiz/OneDrive/Documents/ChessMP/ChessMP/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="PhotonUnityNetworking.Utilities.PhotonPlayer.Editor.csproj">
-      <Project>{4DE5AF87-97BA-3F39-5CE6-45687594F19D}</Project>
+      <Project>{368D742D-49E3-AF24-CC93-DFB5841F01AD}</Project>
       <Name>PhotonUnityNetworking.Utilities.PhotonPlayer.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="PunDemos.DemoHubEditor.csproj">
-      <Project>{51B40D34-D155-ED18-FB41-213FACD1429B}</Project>
+      <Project>{69B2673A-19BD-8897-B86D-2E028E83F709}</Project>
       <Name>PunDemos.DemoHubEditor</Name>
     </ProjectReference>
     <ProjectReference Include="PunDemos.DemoSlotcarEditor.csproj">
-      <Project>{625FC4A0-1491-E865-4D49-011A4872C92D}</Project>
+      <Project>{06D21D3C-2114-203B-0750-6EFFB6714C19}</Project>
       <Name>PunDemos.DemoSlotcarEditor</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Demos.csproj">
-      <Project>{06ECF082-CC25-5122-49C0-4CA99B637D48}</Project>
+      <Project>{D3165EBF-894E-F2DB-1A0A-44AA4745FBA6}</Project>
       <Name>PhotonUnityNetworking.Demos</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Utilities.csproj">
-      <Project>{45CA7D54-8FFF-1F21-5BFF-FF4481BE7D19}</Project>
+      <Project>{C93F455B-C762-5A45-32D0-C94198B4427F}</Project>
       <Name>PhotonUnityNetworking.Utilities</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonRealtime.csproj">
-      <Project>{0CE2FDAE-EFE0-7156-DCA6-CFE1937AD2B1}</Project>
+      <Project>{CF4050A8-4611-C2BF-30D7-78331E1E0EA4}</Project>
       <Name>PhotonRealtime</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.csproj">
-      <Project>{D13B9BF3-3B6F-9F49-F968-08A52547910D}</Project>
+      <Project>{71E2DA38-316F-BB3D-29F6-C8300E5B6820}</Project>
       <Name>PhotonUnityNetworking</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonChat.csproj">
-      <Project>{7B2ED3AA-D0C3-25AE-C212-8C8853D69546}</Project>
+      <Project>{17353213-49F9-EA1D-07EB-757BB9C5592B}</Project>
       <Name>PhotonChat</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Utilities.Culling.Editor.csproj">
-      <Project>{D024BA4B-D4B5-8341-EEAA-097B8110BDAD}</Project>
+      <Project>{26934878-465B-B91E-A9B7-BF60C3D16CE8}</Project>
       <Name>PhotonUnityNetworking.Utilities.Culling.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Editor.csproj">
-      <Project>{9A804DB0-10D6-7E97-301B-110F6293F0A3}</Project>
+      <Project>{C6C21A2E-1C5E-7E41-550D-046EC7B9930A}</Project>
       <Name>PhotonUnityNetworking.Editor</Name>
     </ProjectReference>
   </ItemGroup>

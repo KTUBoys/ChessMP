@@ -18,8 +18,6 @@ namespace Assets.Scenes.GameView.Scripts
             {
                 SceneManager.LoadSceneAsync("Scenes/Menu");
                 Debug.Log("Pressed escape: back to Menu scene");
-
-                PhotonNetwork.LeaveRoom();
             }
         }
     }
