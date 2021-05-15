@@ -1,7 +1,9 @@
 ﻿using Assets.Scripts.Pieces;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using JetBrains.Annotations;
+using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -9,21 +11,25 @@ namespace Assets.Scripts
     public class GameManager : MonoBehaviour
     {
         /*<Network variables> These are implemented here so that Networked games and local games would work on the same scene */
-        [SerializeField] private NetworkGameManager networkGame;
-        [SerializeField] private GameObject TeamSelect;
-        protected bool canMove = true;
+        [SerializeField] private NetworkGameManager _networkGame;
+        [SerializeField] private GameObject _teamSelect;
+        protected bool CanMove = true;
         /*</Network variables>*/
 
         public ChessBoard Board;
-        public GameObject PawnPiece;
-        public GameObject RookPiece;
-        public GameObject QueenPiece;
-        public GameObject KingPiece;
-        public GameObject BishopPiece;
-        public GameObject KnightPiece;
-        public MovementSoundScript SoundManager;
-        private Camera WhiteCamera;
-        private Camera BlackCamera;
+        [SerializeField] private GameObject _pawnPiece;
+        [SerializeField] private GameObject _rookPiece;
+        [SerializeField] private GameObject _queenPiece;
+        [SerializeField] private GameObject _kingPiece;
+        [SerializeField] private GameObject _bishopPiece;
+        [SerializeField] private GameObject _knightPiece;
+        [SerializeField] public MovementSoundScript SoundManager;
+        [SerializeField] private TMP_Text _winnerText;
+        [SerializeField] private GameObject _winnerPopup;
+        [SerializeField] private WinnerPopupAnimator _winnerPopupAnimator;
+
+        private Camera _whiteCamera;
+        private Camera _blackCamera;
 
         public static GameManager Game;
 
@@ -36,9 +42,9 @@ namespace Assets.Scripts
         private Player _otherPlayer;
 
         // UI
-        public CapturedPiecesUI CPUI_Black;
-        public CapturedPiecesUI CPUI_White;
-        public MovementHistoryUI MovementHistoryUI;
+        [SerializeField] private CapturedPiecesUI _cpuiBlack;
+        [SerializeField] private CapturedPiecesUI _cpuiWhite;
+        [SerializeField] private MovementHistoryUI _movementHistoryUi;
 
         private void Awake()
         {
@@ -48,11 +54,11 @@ namespace Assets.Scripts
 
         protected virtual void Start()
         {
-            WhiteCamera = GameObject.FindGameObjectWithTag("WhiteCamera").GetComponent<Camera>();
-            BlackCamera = GameObject.FindGameObjectWithTag("BlackCamera").GetComponent<Camera>();
+            _whiteCamera = GameObject.FindGameObjectWithTag("WhiteCamera").GetComponent<Camera>();
+            _blackCamera = GameObject.FindGameObjectWithTag("BlackCamera").GetComponent<Camera>();
 
-            WhiteCamera.enabled = true;
-            BlackCamera.enabled = false;
+            _whiteCamera.enabled = true;
+            _blackCamera.enabled = false;
             Pieces = new GameObject[8, 8];
             _movedPawns = new List<GameObject>();
 
@@ -91,7 +97,7 @@ namespace Assets.Scripts
             SpawnFigures(xPoints, zPoints, pieceAngles);
         }
 
-        private void SpawnFigures(int[] xPoints, int[] zPoints, Quaternion[] pieceAngles)
+        private void SpawnFigures(IReadOnlyList<int> xPoints, IReadOnlyList<int> zPoints, Quaternion[] pieceAngles)
         {
             var white = pieceAngles[0];
             SpawnPaws(xPoints[0], zPoints[0], white, 1);
@@ -114,7 +120,7 @@ namespace Assets.Scripts
 
         private void SpawnPaws(float x, float z, Quaternion quaternion, int color)
         {
-            PawnPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
+            _pawnPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
             var c = "Black";
             if (color == 1)
             {
@@ -124,7 +130,7 @@ namespace Assets.Scripts
             for (var i = 0; i < 8; i++)
             {
                 var pawnName = $"{c} Pawn {i + 1}";
-                var pawn = Instantiate(PawnPiece, new Vector3(x, YAxis, z), quaternion);
+                var pawn = Instantiate(_pawnPiece, new Vector3(x, YAxis, z), quaternion);
                 pawn.AddComponent<BoxCollider>();
                 var piece = pawn.AddComponent<Pawn>();
                 piece.Type = PieceType.Pawn;
@@ -144,10 +150,10 @@ namespace Assets.Scripts
 
         private void SpawnRooks(float x, float z, Quaternion quaternion, int color)
         {
-            RookPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
+            _rookPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
             for (var i = 0; i < 2; i++)
             {
-                var rook = Instantiate(RookPiece, new Vector3(x, YAxis, z), quaternion);
+                var rook = Instantiate(_rookPiece, new Vector3(x, YAxis, z), quaternion);
                 rook.AddComponent<BoxCollider>();
                 var piece = rook.AddComponent<Rook>();
                 piece.Type = PieceType.Rook;
@@ -165,10 +171,10 @@ namespace Assets.Scripts
 
         private void SpawnKnights(float x, float z, Quaternion quaternion, int color)
         {
-            KnightPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
+            _knightPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
             for (var i = 0; i < 2; i++)
             {
-                var knight = Instantiate(KnightPiece, new Vector3(x, YAxis, z), quaternion);
+                var knight = Instantiate(_knightPiece, new Vector3(x, YAxis, z), quaternion);
                 knight.AddComponent<BoxCollider>();
                 var piece = knight.AddComponent<Knight>();
                 piece.Type = PieceType.Knight;
@@ -186,10 +192,10 @@ namespace Assets.Scripts
 
         private void SpawnBishops(float x, float z, Quaternion quaternion, int color)
         {
-            BishopPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
+            _bishopPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
             for (var i = 0; i < 2; i++)
             {
-                var bishop = Instantiate(BishopPiece, new Vector3(x, YAxis, z), quaternion);
+                var bishop = Instantiate(_bishopPiece, new Vector3(x, YAxis, z), quaternion);
                 bishop.AddComponent<BoxCollider>();
                 var piece = bishop.AddComponent<Bishop>();
                 piece.Type = PieceType.Bishop;
@@ -207,8 +213,8 @@ namespace Assets.Scripts
 
         private void SpawnKing(float x, float z, Quaternion quaternion, int color)
         {
-            KingPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
-            var king = Instantiate(KingPiece, new Vector3(x, YAxis, z), quaternion);
+            _kingPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
+            var king = Instantiate(_kingPiece, new Vector3(x, YAxis, z), quaternion);
             king.AddComponent<BoxCollider>();
             var piece = king.AddComponent<King>();
             piece.Type = PieceType.King;
@@ -224,8 +230,8 @@ namespace Assets.Scripts
 
         private void SpawnQueen(float x, float z, Quaternion quaternion, int color)
         {
-            QueenPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
-            var queen = Instantiate(QueenPiece, new Vector3(x, YAxis, z), quaternion);
+            _queenPiece.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[color];
+            var queen = Instantiate(_queenPiece, new Vector3(x, YAxis, z), quaternion);
             queen.AddComponent<BoxCollider>();
             var piece = queen.AddComponent<Queen>();
             piece.Type = PieceType.Queen;
@@ -272,7 +278,7 @@ namespace Assets.Scripts
             var startGridPoint = PointForPiece(piece);
             Pieces[startGridPoint.y, startGridPoint.x] = null;
             Pieces[gp.y, gp.x] = piece;
-            MovementHistoryUI.OnPieceMoved(CurrentPlayer, piece, startGridPoint, gp); // Updates the movement history panel
+            _movementHistoryUi.OnPieceMoved(CurrentPlayer, piece, startGridPoint, gp); // Updates the movement history panel
             Board.MovePiece(piece, gridPoint);
         }
 
@@ -292,17 +298,25 @@ namespace Assets.Scripts
 
             // --- Captured pieces UI update
             if (CurrentPlayer.PlayerType.Equals(PlayerType.White))
-                CPUI_White.OnPieceCapture(PlayerType.White, capturePiece.GetComponent<Piece>().Type);
+                _cpuiWhite.OnPieceCapture(PlayerType.White, capturePiece.GetComponent<Piece>().Type);
             else
-                CPUI_Black.OnPieceCapture(PlayerType.Black, capturePiece.GetComponent<Piece>().Type);
+                _cpuiBlack.OnPieceCapture(PlayerType.Black, capturePiece.GetComponent<Piece>().Type);
             // ---
 
             if (capturePiece.GetComponent<Piece>().Type == PieceType.King)
             {
-                Debug.Log(CurrentPlayer.Name + " winner!");
                 Destroy(Board.GetComponent<TileSelector>());
+                WinnerPopUp();
             }
             Destroy(capturePiece);
+        }
+
+        private void WinnerPopUp()
+        {
+            var color = CurrentPlayer.Name != string.Empty ? CurrentPlayer.Name : CurrentPlayer.PlayerType.ToString();
+            _winnerText.SetText($"{color} wins!");
+            _winnerPopup.SetActive(true);
+            _winnerPopupAnimator.enabled = true;
         }
 
         internal void SelectPiece(GameObject piece)
@@ -317,7 +331,7 @@ namespace Assets.Scripts
 
         internal bool IsCurrentPlayerPiece(GameObject piece)
         {
-            return CurrentPlayer.Pieces.Contains(piece) && canMove;
+            return CurrentPlayer.Pieces.Contains(piece) && CanMove;
         }
 
         internal GameObject PieceAtGrid(Vector2Int gridPoint)
@@ -389,7 +403,7 @@ namespace Assets.Scripts
             var temp = CurrentPlayer;
             CurrentPlayer = _otherPlayer;
             _otherPlayer = temp;
-            if (BlackCamera.enabled == false)
+            if (_blackCamera.enabled == false)
             {
                 SwitchToBlackCamera(mainCam);
             }
@@ -401,15 +415,15 @@ namespace Assets.Scripts
 
         private void SwitchToBlackCamera(GameObject mainCam)
         {
-            WhiteCamera.enabled = false;
-            BlackCamera.enabled = true;
+            _whiteCamera.enabled = false;
+            _blackCamera.enabled = true;
             mainCam.transform.SetPositionAndRotation(new Vector3(-40.1f, 61, -34.1f), Quaternion.Euler(90, 180, 0));
         }
 
         private void SwitchToWhiteCamera(GameObject mainCam)
         {
-            BlackCamera.enabled = false;
-            WhiteCamera.enabled = true;
+            _blackCamera.enabled = false;
+            _whiteCamera.enabled = true;
             mainCam.transform.SetPositionAndRotation(new Vector3(-39.9f, 61, -34.1f), Quaternion.Euler(90, 0, 0));
         }
 
@@ -422,12 +436,12 @@ namespace Assets.Scripts
             {
                 CurrentPlayer = _white;
                 _otherPlayer = _black;
-                canMove = true;
+                CanMove = true;
                 SwitchToWhiteCamera(mainCamera);
             }
             else
             {
-                canMove = false;
+                CanMove = false;
                 CurrentPlayer = _black;
                 _otherPlayer = _white;
                 SwitchToBlackCamera(mainCamera);
@@ -436,8 +450,8 @@ namespace Assets.Scripts
 
         public void SetUpOnlineGame()
         {
-            TeamSelect.SetActive(true);
-            networkGame.gameObject.SetActive(true);
+            _teamSelect.SetActive(true);
+            _networkGame.gameObject.SetActive(true);
             gameObject.SetActive(false);
         }
     }
