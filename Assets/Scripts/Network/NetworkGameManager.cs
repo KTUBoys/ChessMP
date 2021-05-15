@@ -21,7 +21,7 @@ public class NetworkGameManager : GameManager
     protected override void Start()
     {
         base.Start();
-        canMove = false;
+        CanMove = false;
     }
 
     internal override void Move(GameObject piece, Vector2Int gridPoint)
@@ -33,10 +33,10 @@ public class NetworkGameManager : GameManager
     [PunRPC]
     private void RPC_Move(Vector2 selectedPiece, Vector2 gridPoint)
     {
-        canMove = !canMove;
+        CanMove = !CanMove;
 
-        Vector2Int gridPointInteger = new Vector2Int(Mathf.RoundToInt(gridPoint.x), Mathf.RoundToInt(gridPoint.y));
-        GameObject piece = PieceAtGrid(new Vector2Int(Mathf.RoundToInt(selectedPiece.x), Mathf.RoundToInt(selectedPiece.y)));
+        var gridPointInteger = new Vector2Int(Mathf.RoundToInt(gridPoint.x), Mathf.RoundToInt(gridPoint.y));
+        var piece = PieceAtGrid(new Vector2Int(Mathf.RoundToInt(selectedPiece.x), Mathf.RoundToInt(selectedPiece.y)));
 
         if (Game.PieceAtGrid(gridPointInteger) != null)
         {
