@@ -10990,28 +10990,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db4d0b4985ee7fb459668c6fee28e4d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkGame: {fileID: 0}
-  TeamSelect: {fileID: 0}
+  _networkGame: {fileID: 0}
+  _teamSelect: {fileID: 0}
   Board: {fileID: 849731326}
-  PawnPiece: {fileID: 919132149155446097, guid: c70085651e5467c48ae8ff7ddfca78a9,
+  _pawnPiece: {fileID: 919132149155446097, guid: c70085651e5467c48ae8ff7ddfca78a9,
     type: 3}
-  RookPiece: {fileID: 919132149155446097, guid: ead4372ebff54a34ca60818653d6db0e,
+  _rookPiece: {fileID: 919132149155446097, guid: 7821a920d0f103944b80aaed291f1035,
     type: 3}
-  QueenPiece: {fileID: 919132149155446097, guid: d91823f4e99445c4ebdcf521f17d992a,
+  _queenPiece: {fileID: 919132149155446097, guid: d91823f4e99445c4ebdcf521f17d992a,
     type: 3}
-  KingPiece: {fileID: 919132149155446097, guid: 7b926408c31e7574abc8fa2d7efd1644,
+  _kingPiece: {fileID: 919132149155446097, guid: 7b926408c31e7574abc8fa2d7efd1644,
     type: 3}
-  BishopPiece: {fileID: 919132149155446097, guid: 1cb0e4f8f884dd54e8b6ebb1ce355d17,
+  _bishopPiece: {fileID: 919132149155446097, guid: 1cb0e4f8f884dd54e8b6ebb1ce355d17,
     type: 3}
-  KnightPiece: {fileID: 919132149155446097, guid: e406c4967fa65ab45b458a264358dd6c,
+  _knightPiece: {fileID: 919132149155446097, guid: e406c4967fa65ab45b458a264358dd6c,
     type: 3}
   SoundManager: {fileID: 1649854366}
-  WinnerText: {fileID: 60870845}
-  WinnerPopup: {fileID: 1922070422}
-  winnerPopupAnimator: {fileID: 1922070426}
-  CPUI_Black: {fileID: 205772125}
-  CPUI_White: {fileID: 212922916}
-  MovementHistoryUI: {fileID: 1341818803}
+  _winnerText: {fileID: 60870845}
+  _winnerPopup: {fileID: 1922070422}
+  _winnerPopupAnimator: {fileID: 1922070426}
+  _cpuiBlack: {fileID: 205772125}
+  _cpuiWhite: {fileID: 212922916}
+  _movementHistoryUi: {fileID: 1341818803}
 --- !u!23 &1296387496
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -14487,8 +14487,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4227eceeef2f114dac01cf713afe6d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winnerPopUp: {fileID: 1922070422}
-  animTime: 0.6
+  _winnerPopUp: {fileID: 1922070422}
+  _animTime: 0.5
 --- !u!1 &1974666674
 GameObject:
   m_ObjectHideFlags: 0

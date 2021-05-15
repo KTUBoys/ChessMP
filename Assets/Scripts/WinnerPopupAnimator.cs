@@ -9,14 +9,16 @@ namespace Assets.Scripts
         /// <summary>
         /// Winner pop up canvas
         /// </summary>
-        [SerializeField] private GameObject winnerPopUp;
+        [SerializeField] private GameObject _winnerPopUp;
         /// <summary>
         /// Time in seconds
         /// </summary>
-        [SerializeField] private float animTime;
+        [SerializeField] private float _animTime;
         void Start()
         {
-            LeanTween.moveLocal(winnerPopUp, Vector3.zero, animTime);
+            LeanTween.moveLocal(_winnerPopUp, Vector3.zero, _animTime)
+                .setEaseInExpo()
+                .setEaseOutBack();
         }
     }
 }
