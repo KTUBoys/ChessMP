@@ -54,8 +54,28 @@ public class NetworkGameManager : GameManager
         Pieces[startGridPoint.y, startGridPoint.x] = null;
         Pieces[gp.y, gp.x] = piece;
         Board.MovePiece(piece, gridPointInteger);
+        MovementHistoryUI.OnPieceMoved(CurrentPlayer, piece, startGridPoint, gp);
     }
 
     //Hiding this when playing online since we dont need to change players
     public override void NextPlayer() { }
+
+    protected override void CapturePieceAt(Vector2Int gridPoint)
+    {
+        var capturePiece = PieceAtGrid(gridPoint);
+
+        // --- Captured pieces UI update
+        if (!canMove)
+            CPUI_White.OnPieceCapture(PlayerType.White, capturePiece.GetComponent<Piece>().Type);
+        else
+            CPUI_Black.OnPieceCapture(PlayerType.Black, capturePiece.GetComponent<Piece>().Type);
+        // ---
+
+        if (capturePiece.GetComponent<Piece>().Type == PieceType.King)
+        {
+            Debug.Log(CurrentPlayer.Name + " winner!");
+            Destroy(Board.GetComponent<TileSelector>());
+        }
+        Destroy(capturePiece);
+    }
 }

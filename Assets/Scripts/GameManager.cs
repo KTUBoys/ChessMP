@@ -286,7 +286,7 @@ namespace Assets.Scripts
             return _movedPawns.Contains(pawn);
         }
 
-        internal void CapturePieceAt(Vector2Int gridPoint)
+        protected virtual void CapturePieceAt(Vector2Int gridPoint)
         {
             var capturePiece = PieceAtGrid(gridPoint);
 
