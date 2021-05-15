@@ -54,7 +54,7 @@ public class NetworkGameManager : GameManager
         Pieces[startGridPoint.y, startGridPoint.x] = null;
         Pieces[gp.y, gp.x] = piece;
         Board.MovePiece(piece, gridPointInteger);
-        MovementHistoryUI.OnPieceMoved(CurrentPlayer, piece, startGridPoint, gp);
+        _movementHistoryUi.OnPieceMoved(CurrentPlayer, piece, startGridPoint, gp);
     }
 
     //Hiding this when playing online since we dont need to change players
@@ -65,10 +65,10 @@ public class NetworkGameManager : GameManager
         var capturePiece = PieceAtGrid(gridPoint);
 
         // --- Captured pieces UI update
-        if (!canMove)
-            CPUI_White.OnPieceCapture(PlayerType.White, capturePiece.GetComponent<Piece>().Type);
+        if (!CanMove)
+            _cpuiWhite.OnPieceCapture(PlayerType.White, capturePiece.GetComponent<Piece>().Type);
         else
-            CPUI_Black.OnPieceCapture(PlayerType.Black, capturePiece.GetComponent<Piece>().Type);
+            _cpuiBlack.OnPieceCapture(PlayerType.Black, capturePiece.GetComponent<Piece>().Type);
         // ---
 
         if (capturePiece.GetComponent<Piece>().Type == PieceType.King)

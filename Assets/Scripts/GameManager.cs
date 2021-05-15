@@ -42,9 +42,9 @@ namespace Assets.Scripts
         private Player _otherPlayer;
 
         // UI
-        [SerializeField] private CapturedPiecesUI _cpuiBlack;
-        [SerializeField] private CapturedPiecesUI _cpuiWhite;
-        [SerializeField] private MovementHistoryUI _movementHistoryUi;
+        [SerializeField] protected CapturedPiecesUI _cpuiBlack;
+        [SerializeField] protected CapturedPiecesUI _cpuiWhite;
+        [SerializeField] protected MovementHistoryUI _movementHistoryUi;
 
         private void Awake()
         {
