@@ -1,7 +1,9 @@
 ﻿using Assets.Scripts.Pieces;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using JetBrains.Annotations;
+using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -22,6 +24,10 @@ namespace Assets.Scripts
         public GameObject BishopPiece;
         public GameObject KnightPiece;
         public MovementSoundScript SoundManager;
+        public TMP_Text WinnerText;
+        public GameObject WinnerPopup;
+        [SerializeField] private WinnerPopupAnimator winnerPopupAnimator;
+
         private Camera WhiteCamera;
         private Camera BlackCamera;
 
@@ -94,22 +100,22 @@ namespace Assets.Scripts
         private void SpawnFigures(int[] xPoints, int[] zPoints, Quaternion[] pieceAngles)
         {
             var white = pieceAngles[0];
-            SpawnPaws(xPoints[0], zPoints[0], white, 1);
-            SpawnRooks(xPoints[0], zPoints[1], white, 1);
-            SpawnKnights(xPoints[1], zPoints[1], white, 1);
-            SpawnBishops(xPoints[2], zPoints[1], white, 1);
-            SpawnQueen(xPoints[3], zPoints[1], white, 1);
+            // SpawnPaws(xPoints[0], zPoints[0], white, 1);
+            // SpawnRooks(xPoints[0], zPoints[1], white, 1);
+            // SpawnKnights(xPoints[1], zPoints[1], white, 1);
+            // SpawnBishops(xPoints[2], zPoints[1], white, 1);
+            // SpawnQueen(xPoints[3], zPoints[1], white, 1);
             SpawnKing(xPoints[4], zPoints[1], white, 1);
 
             // Spawn Black figures
             var black = pieceAngles[1];
 
-            SpawnPaws(xPoints[0], zPoints[2], black, 0);
-            SpawnRooks(xPoints[0], zPoints[3], black, 0);
-            SpawnKnights(xPoints[1], zPoints[3], black, 0);
-            SpawnBishops(xPoints[2], zPoints[3], black, 0);
-            SpawnQueen(xPoints[3], zPoints[3], black, 0);
-            SpawnKing(xPoints[4], zPoints[3], black, 0);
+            // SpawnPaws(xPoints[0], zPoints[2], black, 0);
+            // SpawnRooks(xPoints[0], zPoints[3], black, 0);
+            // SpawnKnights(xPoints[1], zPoints[3], black, 0);
+            // SpawnBishops(xPoints[2], zPoints[3], black, 0);
+            // SpawnQueen(xPoints[3], zPoints[3], black, 0);
+            SpawnKing(xPoints[3], zPoints[1], black, 0);
         }
 
         private void SpawnPaws(float x, float z, Quaternion quaternion, int color)
@@ -218,7 +224,7 @@ namespace Assets.Scripts
             }
             else
             {
-                AddPiece(king, _black, 4, 0);
+                AddPiece(king, _black, 3, 7);
             }
         }
 
@@ -299,10 +305,18 @@ namespace Assets.Scripts
 
             if (capturePiece.GetComponent<Piece>().Type == PieceType.King)
             {
-                Debug.Log(CurrentPlayer.Name + " winner!");
                 Destroy(Board.GetComponent<TileSelector>());
+                WinnerPopUp();
             }
             Destroy(capturePiece);
+        }
+
+        private void WinnerPopUp()
+        {
+            var color = CurrentPlayer.Name != string.Empty ? CurrentPlayer.Name : CurrentPlayer.PlayerType.ToString();
+            WinnerText.SetText($"{color} wins!");
+            WinnerPopup.SetActive(true);
+            winnerPopupAnimator.enabled = true;
         }
 
         internal void SelectPiece(GameObject piece)

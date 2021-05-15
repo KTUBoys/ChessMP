@@ -13,6 +13,8 @@ TagManager:
   - WhiteCamera
   - BlackCamera
   - BackgroundMusic
+  - WinnerText
+  - WinnerPopup
   layers:
   - Default
   - TransparentFX
