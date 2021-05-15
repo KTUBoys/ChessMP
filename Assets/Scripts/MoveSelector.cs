@@ -84,17 +84,9 @@ namespace Assets.Scripts
                 CancelMove();
             }
 
-            foreach (var loc in _moveLocations)
+            foreach (var highlight in _moveLocations.Select(loc => Instantiate(Game.PieceAtGrid(loc) ? AttackLocationPrefab : MoveLocationPrefab, 
+                ChessBoard.PointFromGrid(loc), Quaternion.Euler(-90f, 0f, 0f), gameObject.transform)))
             {
-                GameObject highlight;
-                if (Game.PieceAtGrid(loc))
-                {
-                    highlight = Instantiate(AttackLocationPrefab, ChessBoard.PointFromGrid(loc), Quaternion.Euler(-90f, 0f, 0f), gameObject.transform);
-                }
-                else
-                {
-                    highlight = Instantiate(MoveLocationPrefab, ChessBoard.PointFromGrid(loc), Quaternion.Euler(-90f, 0f, 0f), gameObject.transform);
-                }
                 _locationHighlights.Add(highlight);
             }
         }

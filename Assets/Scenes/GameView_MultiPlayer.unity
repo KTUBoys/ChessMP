@@ -11639,25 +11639,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db4d0b4985ee7fb459668c6fee28e4d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkGame: {fileID: 1396112345}
-  TeamSelect: {fileID: 994262081}
+  _networkGame: {fileID: 1396112345}
+  _teamSelect: {fileID: 994262081}
   Board: {fileID: 849731326}
-  PawnPiece: {fileID: 919132149155446097, guid: c70085651e5467c48ae8ff7ddfca78a9,
+  _pawnPiece: {fileID: 919132149155446097, guid: c70085651e5467c48ae8ff7ddfca78a9,
     type: 3}
-  RookPiece: {fileID: 919132149155446097, guid: ead4372ebff54a34ca60818653d6db0e,
+  _rookPiece: {fileID: 919132149155446097, guid: ead4372ebff54a34ca60818653d6db0e,
     type: 3}
-  QueenPiece: {fileID: 919132149155446097, guid: d91823f4e99445c4ebdcf521f17d992a,
+  _queenPiece: {fileID: 919132149155446097, guid: d91823f4e99445c4ebdcf521f17d992a,
     type: 3}
-  KingPiece: {fileID: 919132149155446097, guid: 7b926408c31e7574abc8fa2d7efd1644,
+  _kingPiece: {fileID: 919132149155446097, guid: 7b926408c31e7574abc8fa2d7efd1644,
     type: 3}
-  BishopPiece: {fileID: 919132149155446097, guid: 1cb0e4f8f884dd54e8b6ebb1ce355d17,
+  _bishopPiece: {fileID: 919132149155446097, guid: 1cb0e4f8f884dd54e8b6ebb1ce355d17,
     type: 3}
-  KnightPiece: {fileID: 919132149155446097, guid: e406c4967fa65ab45b458a264358dd6c,
+  _knightPiece: {fileID: 919132149155446097, guid: e406c4967fa65ab45b458a264358dd6c,
     type: 3}
   SoundManager: {fileID: 1649854366}
-  CPUI_Black: {fileID: 205772125}
-  CPUI_White: {fileID: 212922916}
-  MovementHistoryUI: {fileID: 1341818803}
+  _winnerText: {fileID: 60870845}
+  _winnerPopup: {fileID: 1922070422}
+  _winnerPopupAnimator: {fileID: 1922070426}
+  _cpuiBlack: {fileID: 205772125}
+  _cpuiWhite: {fileID: 212922916}
+  _movementHistoryUi: {fileID: 1341818803}
 --- !u!23 &1296387496
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12638,25 +12641,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d077bddfe6b5d354191443b2f9089e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkGame: {fileID: 1396112345}
-  TeamSelect: {fileID: 994262081}
+  _networkGame: {fileID: 1396112345}
+  _teamSelect: {fileID: 994262081}
   Board: {fileID: 849731326}
-  PawnPiece: {fileID: 919132149155446097, guid: 0db5332a3220d7a43a1d8c7d7b3933f2,
+  _pawnPiece: {fileID: 919132149155446097, guid: c70085651e5467c48ae8ff7ddfca78a9,
     type: 3}
-  RookPiece: {fileID: 919132149155446097, guid: 7821a920d0f103944b80aaed291f1035,
+  _rookPiece: {fileID: 919132149155446097, guid: ead4372ebff54a34ca60818653d6db0e,
     type: 3}
-  QueenPiece: {fileID: 919132149155446097, guid: 7cd1caced08a81843a850c032af88c7e,
+  _queenPiece: {fileID: 919132149155446097, guid: d91823f4e99445c4ebdcf521f17d992a,
     type: 3}
-  KingPiece: {fileID: 919132149155446097, guid: 316effdb90bae6943a05ad4444784038,
+  _kingPiece: {fileID: 919132149155446097, guid: 7b926408c31e7574abc8fa2d7efd1644,
     type: 3}
-  BishopPiece: {fileID: 919132149155446097, guid: 98f0472659ed8c946936ced471f14141,
+  _bishopPiece: {fileID: 919132149155446097, guid: 1cb0e4f8f884dd54e8b6ebb1ce355d17,
     type: 3}
-  KnightPiece: {fileID: 919132149155446097, guid: 20a1933d9abc98c48a07213b833a6062,
+  _knightPiece: {fileID: 919132149155446097, guid: e406c4967fa65ab45b458a264358dd6c,
     type: 3}
   SoundManager: {fileID: 1649854366}
-  CPUI_Black: {fileID: 205772125}
-  CPUI_White: {fileID: 212922916}
-  MovementHistoryUI: {fileID: 1341818803}
+  _winnerText: {fileID: 60870845}
+  _winnerPopup: {fileID: 1922070422}
+  _winnerPopupAnimator: {fileID: 1922070426}
+  _cpuiBlack: {fileID: 205772125}
+  _cpuiWhite: {fileID: 212922916}
+  _movementHistoryUi: {fileID: 1341818803}
 --- !u!114 &1396112346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15311,6 +15317,7 @@ GameObject:
   - component: {fileID: 1922070423}
   - component: {fileID: 1922070425}
   - component: {fileID: 1922070424}
+  - component: {fileID: 1922070426}
   m_Layer: 5
   m_Name: WinnerPanel
   m_TagString: Untagged
@@ -15376,6 +15383,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1922070422}
   m_CullTransparentMesh: 0
+--- !u!114 &1922070426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922070422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4227eceeef2f114dac01cf713afe6d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _winnerPopUp: {fileID: 1922070422}
+  _animTime: 0.55
 --- !u!1 &1929040603
 GameObject:
   m_ObjectHideFlags: 0
