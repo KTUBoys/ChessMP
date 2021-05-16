@@ -73,8 +73,8 @@ public class NetworkGameManager : GameManager
 
         if (capturePiece.GetComponent<Piece>().Type == PieceType.King)
         {
-            Debug.Log(CurrentPlayer.Name + " winner!");
             Destroy(Board.GetComponent<TileSelector>());
+            WinnerPopUp();
         }
         Destroy(capturePiece);
     }

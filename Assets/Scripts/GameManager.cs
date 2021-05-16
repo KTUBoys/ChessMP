@@ -311,7 +311,7 @@ namespace Assets.Scripts
             Destroy(capturePiece);
         }
 
-        private void WinnerPopUp()
+        protected void WinnerPopUp()
         {
             var color = CurrentPlayer.Name != string.Empty ? CurrentPlayer.Name : CurrentPlayer.PlayerType.ToString();
             _winnerText.SetText($"{color} wins!");
