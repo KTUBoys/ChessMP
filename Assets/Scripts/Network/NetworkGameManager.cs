@@ -78,4 +78,20 @@ public class NetworkGameManager : GameManager
         }
         Destroy(capturePiece);
     }
+
+    protected override void WinnerPopUp()
+    {
+        string text = "";
+        if (!CanMove)
+        {
+            text = "You win!";
+        }
+        else
+        {
+            text = "You lose!";
+        }
+        _winnerText.SetText($"{text}");
+        _winnerPopup.SetActive(true);
+        _winnerPopupAnimator.enabled = true;
+    }
 }

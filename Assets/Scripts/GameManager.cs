@@ -24,9 +24,9 @@ namespace Assets.Scripts
         [SerializeField] private GameObject _bishopPiece;
         [SerializeField] private GameObject _knightPiece;
         [SerializeField] public MovementSoundScript SoundManager;
-        [SerializeField] private TMP_Text _winnerText;
-        [SerializeField] private GameObject _winnerPopup;
-        [SerializeField] private WinnerPopupAnimator _winnerPopupAnimator;
+        [SerializeField] protected TMP_Text _winnerText;
+        [SerializeField] protected GameObject _winnerPopup;
+        [SerializeField] protected WinnerPopupAnimator _winnerPopupAnimator;
 
         private Camera _whiteCamera;
         private Camera _blackCamera;
@@ -311,7 +311,7 @@ namespace Assets.Scripts
             Destroy(capturePiece);
         }
 
-        protected void WinnerPopUp()
+        protected virtual void WinnerPopUp()
         {
             var color = CurrentPlayer.Name != string.Empty ? CurrentPlayer.Name : CurrentPlayer.PlayerType.ToString();
             _winnerText.SetText($"{color} wins!");
