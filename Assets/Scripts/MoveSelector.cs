@@ -20,7 +20,7 @@ namespace Assets.Scripts
         {
             enabled = false;
             _tileHighlight = Instantiate(TileHighlightPrefab, ChessBoard.PointFromGrid(new Vector2Int(0, 0)),
-                Quaternion.identity, gameObject.transform);
+                Quaternion.Euler(-90f, 0f, 0f), gameObject.transform);
             _tileHighlight.SetActive(false);
         }
 
@@ -34,7 +34,8 @@ namespace Assets.Scripts
                 var gridPoint = ChessBoard.GridFromPoint(point);
 
                 _tileHighlight.SetActive(true);
-                _tileHighlight.transform.position = ChessBoard.PointFromGrid(gridPoint);
+                var xz = ChessBoard.PointFromGrid(gridPoint);
+                _tileHighlight.transform.position = new Vector3(xz.x, 0f, xz.z);
                 var gp = new Vector2Int((int) ChessBoard.PointFromGrid(gridPoint).x,
                     (int) ChessBoard.PointFromGrid(gridPoint).z);
                 if (Input.GetMouseButtonDown(0))
@@ -45,15 +46,7 @@ namespace Assets.Scripts
                         return;
                     }
                     
-                    if (Game.PieceAtGrid(gridPoint) == null)
-                    {
-                        Game.Move(_movingPiece, gridPoint);
-                    }
-                    else
-                    {
-                        Game.CapturePieceAt(gridPoint);
-                        Game.Move(_movingPiece, gridPoint);
-                    }
+                    Game.Move(_movingPiece, gridPoint);
                     Game.SoundManager.MoveAPiece();
                     ExitState();
                 }
@@ -91,17 +84,9 @@ namespace Assets.Scripts
                 CancelMove();
             }
 
-            foreach (var loc in _moveLocations)
+            foreach (var highlight in _moveLocations.Select(loc => Instantiate(Game.PieceAtGrid(loc) ? AttackLocationPrefab : MoveLocationPrefab, 
+                ChessBoard.PointFromGrid(loc), Quaternion.Euler(-90f, 0f, 0f), gameObject.transform)))
             {
-                GameObject highlight;
-                if (Game.PieceAtGrid(loc))
-                {
-                    highlight = Instantiate(AttackLocationPrefab, ChessBoard.PointFromGrid(loc), Quaternion.identity, gameObject.transform);
-                }
-                else
-                {
-                    highlight = Instantiate(MoveLocationPrefab, ChessBoard.PointFromGrid(loc), Quaternion.identity, gameObject.transform);
-                }
                 _locationHighlights.Add(highlight);
             }
         }
@@ -109,8 +94,6 @@ namespace Assets.Scripts
         private void ExitState()
         {
             this.enabled = false;
-            var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-            mainCamera.transform.Rotate(Vector3.back, 180f);
             var selector = GetComponent<TileSelector>();
             _tileHighlight.SetActive(false);
             Game.DeselectPiece(_movingPiece);

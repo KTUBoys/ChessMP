@@ -12,13 +12,13 @@ namespace Assets.Scripts
         void Start()
         {
             var point = PointFromGrid(new Vector2Int(0, 0));
-            _tileHighlight = Instantiate(TileHighlightPrefab, point, Quaternion.identity, gameObject.transform);
+            _tileHighlight = Instantiate(TileHighlightPrefab, point, Quaternion.Euler(-90f, 0f, 0f), gameObject.transform);
             _tileHighlight.SetActive(false);
         }
 
         void Update()
         {
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            var ray = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit))
             {
                 var point = hit.point;

@@ -40,7 +40,6 @@ public class SettingsPopup : MonoBehaviour
         {
             text.color = new Color(text.color.r, text.color.g, text.color.b, text.color.a - (Time.deltaTime * fadeSpeed));
             image.color = new Color(image.color.r, image.color.g, image.color.b, image.color.a - (Time.deltaTime * fadeSpeed));
-            Debug.Log($"{text.color.a} / {image.color.a}");
             yield return null;
         }
 
