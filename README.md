@@ -1,6 +1,8 @@
 # ChessMP
 
-- [ChessMP](#chessmp)
+- [ChessMP Final release v1](#chessmp-final-release-v1)
+- [IT'S FINAL RELEASE](#its-final-release)
+  - [Changelog 2021-05-16:](#changelog-2021-05-16)
 - [We are going to space!! 🚀🌌](#we-are-going-to-space-)
   - [Changelog 2021-04-12:](#changelog-2021-04-12)
     - [A gif showcasing main menu in version 0.2](#a-gif-showcasing-main-menu-in-version-02)
@@ -8,6 +10,21 @@
   - [Changelog 2021-02-28:](#changelog-2021-02-28)
     - [A gif showcasing the new Main Menu in version 0.1](#a-gif-showcasing-the-new-main-menu-in-version-01)
 #
+
+# IT'S FINAL RELEASE V1.0
+## Changelog 2021-05-16:
++ ## Main menu
+  + Settings menu will now save player preferences upon exiting
+  + Play online leads you to a random online room
+  + Play local leads you to a local 1v1 game mode
++ ## Game
+  + Redefined way of highlighting possible moves
++ ## Game UI
+  + Working UI:
+    + Movement history
+    + White and Black captured pieces
+    + Winner pop up actually works
+
 # We are going to space!! 🚀🌌
 
 ## Changelog 2021-04-12:
