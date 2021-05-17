@@ -1,7 +1,7 @@
 # ChessMP
 
 - [ChessMP](#chessmp)
-- [IT'S FINAL RELEASE V1.0](#its-final-release-v1.0)
+- [IT'S FINAL RELEASE V1.0](#its-final-release-v10)
   - [Changelog 2021-05-16:](#changelog-2021-05-16)
 - [We are going to space!! 🚀🌌](#we-are-going-to-space-)
   - [Changelog 2021-04-12:](#changelog-2021-04-12)
